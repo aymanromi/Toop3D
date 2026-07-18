@@ -1,0 +1,29 @@
+[
+  {
+    "id": 1,
+    "name_ar": "PETG Filament",
+    "name_en": "PETG Filament",
+    "category": "Filament",
+    "price": "20000 IQD",
+    "color": "Black",
+    "image": "images/petg-black.jpg"
+  },
+  {
+    "id": 2,
+    "name_ar": "PETG Filament",
+    "name_en": "PETG Filament",
+    "category": "Filament",
+    "price": "20000 IQD",
+    "color": "White",
+    "image": "images/petg-white.jpg"
+  },
+  {
+    "id": 3,
+    "name_ar": "PLA+ Filament",
+    "name_en": "PLA+ Filament",
+    "category": "Filament",
+    "price": "18000 IQD",
+    "color": "Red",
+    "image": "images/pla-red.jpg"
+  }
+]
