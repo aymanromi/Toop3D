@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D | متجر الطباعة ثلاثية الأبعاد</title>
-    <!-- ربط ملف التنسيقات المسار النسبي -->
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
@@ -13,19 +12,23 @@
     <header style="text-align: center; padding: 20px; background-color: #0f172a; color: white;">
         <h1>Toop3D</h1>
         <p>متجر الطباعة ثلاثية الأبعاد</p>
-        <button onclick="sendWhatsApp()" style="background-color: #25D366; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-size: 16px; margin-top: 10px;">
-            إتمام الطلب عبر واتساب
-        </button>
     </header>
 
-    <!-- شريط التنقل -->
-    <nav style="text-align: center; padding: 15px; background-color: #f1f5f9;">
-        <a href="#" style="margin: 0 15px; text-decoration: none; color: #334155; font-weight: bold;">الرئيسية</a>
-        <a href="#products" style="margin: 0 15px; text-decoration: none; color: #334155; font-weight: bold;">المنتجات</a>
-        <a href="#cart" style="margin: 0 15px; text-decoration: none; color: #334155; font-weight: bold;">السلة</a>
+    <!-- شريط التنقل مع زر السلة الخاص -->
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 15px 30px; background-color: #f1f5f9;">
+        <div>
+            <a href="#" style="margin-left: 15px; text-decoration: none; color: #334155; font-weight: bold;">الرئيسية</a>
+            <a href="#products" style="margin-left: 15px; text-decoration: none; color: #334155; font-weight: bold;">المنتجات</a>
+        </div>
+
+        <!-- ✅ زر السلة الخاص بالدخول إليها -->
+        <a href="#cart" style="position: relative; text-decoration: none; background-color: #2563eb; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+            🛒 السلة 
+            <span id="nav-cart-count" style="background-color: #ef4444; color: white; border-radius: 50%; padding: 2px 7px; font-size: 0.85em;">0</span>
+        </a>
     </nav>
 
-    <!-- قسم الواجهة البروموشنال -->
+    <!-- قسم الواجهة -->
     <section class="hero" style="text-align: center; padding: 40px 20px; background-color: #ffffff; border-bottom: 1px solid #e2e8f0;">
         <h2>منتجات 3D عالية الجودة</h2>
         <p>Filament - Models - 3D Printing Supplies</p>
@@ -35,13 +38,17 @@
     <main style="max-width: 1000px; margin: 0 auto; padding: 20px;">
         <section id="products" class="products-section" style="margin-bottom: 40px;">
             <h2 style="border-bottom: 2px solid #2563eb; padding-bottom: 8px; margin-bottom: 20px;">المنتجات</h2>
-            <!-- هنا ستظهر بطاقات المنتجات القادمة من app.js -->
             <div id="products-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px;"></div>
         </section>
 
-        <!-- قسم سلة المشتريات -->
-        <section id="cart" class="cart-section" style="background-color: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #cbd5e1;">
-            <h2 style="margin-top: 0; color: #0f172a; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">سلة المشتريات</h2>
+        <!-- ✅ قسم سلة المشتريات -->
+        <section id="cart" class="cart-section" style="background-color: #f8fafc; padding: 25px; border-radius: 12px; border: 1px solid #cbd5e1; scroll-margin-top: 20px;">
+            <h2 style="margin-top: 0; color: #0f172a; margin-bottom: 5px;">سلة المشتريات</h2>
+            
+            <!-- ✅ عدد المنتجات المطلوبة أسفل الاسم مباشرة -->
+            <div id="cart-items-count" style="color: #64748b; font-size: 0.95em; margin-bottom: 15px; border-bottom: 1px solid #e2e8f0; padding-bottom: 10px;">
+                عدد المنتجات المطلوبة: 0 قطعة
+            </div>
             
             <!-- مكان عرض المنتجات المضافة -->
             <div id="cart-items" style="margin-top: 15px; min-height: 50px; color: #334155;">
@@ -53,20 +60,17 @@
                 المجموع الكلي: 0 د.ع
             </div>
 
-            <!-- زر التأكيد -->
-            <button onclick="sendWhatsApp()" style="margin-top: 20px; background-color: #252525; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1em; width: 100%; max-width: 250px;">
-                تأكيد الطلب عبر واتساب
+            <!-- زر التوريد عبر الواتساب -->
+            <button onclick="sendWhatsApp()" style="margin-top: 20px; background-color: #25D366; color: white; border: none; padding: 12px 24px; border-radius: 6px; cursor: pointer; font-size: 1em; width: 100%; max-width: 250px;">
+                إتمام الطلب عبر واتساب
             </button>
         </section>
     </main>
 
-    <!-- الفوتر -->
     <footer style="text-align: center; padding: 20px; background-color: #0f172a; color: white; margin-top: 40px;">
         Toop3D © 2026
     </footer>
 
-    <!-- ✅ استدعاء ملف البرمجة الموحد فقط وتجنب التعارض -->
     <script src="./js/app.js"></script>
-
 </body>
 </html>
