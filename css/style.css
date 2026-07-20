@@ -1,5 +1,5 @@
 /* ==========================================
-   1. حاوية المنتجات والشبكة
+   1. التنسيقات العامة للحاوية والشبكة
    ========================================== */
 #products-container {
     display: grid !important;
@@ -7,11 +7,12 @@
     gap: 20px !important;
     padding: 20px 10px !important;
     width: 100% !important;
+    min-height: 300px !important; /* ضمان وجود مساحة لظهور المنتجات */
     box-sizing: border-box !important;
 }
 
 /* ==========================================
-   2. بطاقات المنتجات (Cards)
+   2. بطاقات المنتجات (Cards) والصور المربعة
    ========================================== */
 .product-card {
     background-color: #ffffff !important;
@@ -58,13 +59,13 @@
 }
 
 /* ==========================================
-   3. زر السلة العائم (Floating Cart Button)
+   3. زر السلة العائم الثابت (فوق كل شيء)
    ========================================== */
 #cart-nav-btn {
     position: fixed !important;
-    bottom: 25px !important;
-    left: 25px !important;
-    z-index: 99 !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    z-index: 9999 !important; /* يضمن بقائه عائماً فوق الصفحة والهوتر */
     background-color: #2563eb !important;
     color: #ffffff !important;
     border: none !important;
@@ -76,7 +77,7 @@
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
-    box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
 }
 
 #nav-cart-count {
@@ -88,25 +89,16 @@
 }
 
 /* ==========================================
-   4. النافذة المنبثقة للسلة (Hidden by default)
+   4. النافذة المنبثقة للسلة (إخفاء تلقائي)
    ========================================== */
+#cart-modal,
 .modal {
-    display: none; /* مهم جداً: مخفية افتراضياً */
+    display: none; /* إخفاء النافذة تماماً لكي لا تحجب المنتجات */
     position: fixed !important;
     top: 0 !important;
     left: 0 !important;
     width: 100% !important;
     height: 100% !important;
     background-color: rgba(0, 0, 0, 0.6) !important;
-    z-index: 999999 !important;
-}
-
-.modal-content {
-    background-color: #fff !important;
-    margin: 10% auto !important;
-    padding: 20px !important;
-    border-radius: 12px !important;
-    width: 90% !important;
-    max-width: 450px !important;
-    position: relative !important;
+    z-index: 99999 !important; /* يظهر فوق زر السلة عند فتحه فقط */
 }
