@@ -1,5 +1,5 @@
 /* ==========================================
-   1. التنسيقات العامة للشبكة وحاوية المنتجات
+   1. الشبكة وحاوية المنتجات
    ========================================== */
 #products-container {
     display: grid !important;
@@ -11,7 +11,7 @@
 }
 
 /* ==========================================
-   2. تنسيق بطاقات المنتجات (Cards)
+   2. بطاقات المنتجات (Cards)
    ========================================== */
 .product-card {
     background-color: #ffffff !important;
@@ -27,7 +27,7 @@
 }
 
 /* ==========================================
-   3. جعل الصور مربعة بالكامل وإظهار كافة التفاصيل
+   3. جعل الصور مربعة بالكامل
    ========================================== */
 .product-card img,
 #products-container img {
@@ -44,7 +44,7 @@
 }
 
 /* ==========================================
-   4. تحسين الأزرار والنصوص داخل البطاقة
+   4. تحسين الأزرار والنصوص
    ========================================== */
 .product-card h3 {
     font-size: 1em !important;
@@ -75,13 +75,13 @@
 }
 
 /* ==========================================
-   5. زر السلة العائم (أولوية ظهور عادية)
+   5. زر السلة العائم (أولوية 99)
    ========================================== */
 #cart-nav-btn {
     position: fixed !important;
     bottom: 25px !important;
     left: 25px !important;
-    z-index: 99 !important; /* تبقى خلف النافذة المنبثقة عند فتح السلة */
+    z-index: 99 !important; /* أقل من السلة لتبقى خلفها */
     
     background-color: #2563eb !important;
     color: #ffffff !important;
@@ -95,13 +95,7 @@
     display: flex !important;
     align-items: center !important;
     gap: 8px !important;
-    
     box-shadow: 0 8px 25px rgba(37, 99, 235, 0.45) !important;
-    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
-}
-
-#cart-nav-btn:hover {
-    transform: scale(1.08) !important;
 }
 
 #nav-cart-count {
@@ -113,20 +107,21 @@
 }
 
 /* ==========================================
-   6. النافذة المنبثقة للسلة (Modal) - تصحيح الإخفاء والطبقات
+   6. النافذة المنبثقة للسلة (إخفاء افتراضي + طبقة عليا)
    ========================================== */
 #cart-modal,
 .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    display: none; /* 👈 يحل مشكلة اختفاء المنتجات، لإبقاء السلة مخفية لحين الضغط عليها */
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
     background-color: rgba(0, 0, 0, 0.6) !important;
-    z-index: 999999 !important; /* يضمن ظهور السلة فوق زر السلة الأزرق */
+    z-index: 999999 !important; /* تغطي زر السلة العائم كلياً عند الفتح */
 }
 
-/* رفع محتوى صندوق السلة وتنسيقه */
+/* محتوى السلة داخل النافذة */
 .modal-content,
 #cart-modal > div {
     position: relative !important;
