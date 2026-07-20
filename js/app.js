@@ -1,82 +1,78 @@
-// مصفوفة لتخزين عناصر السلة
 let cart = [];
 
-// 1. دالة جلب المنتجات وعرضها عند تحميل الصفحة
 document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
-    updateCartUI(); // ✅ لتحديث السلة فور فتح الصفحة
+    updateCartUI();
 });
 
 function fetchProducts() {
     fetch('./products.json')
         .then(response => {
-            if (!response.ok) {
-                throw new Error('فشل في جلب ملف المنتجات');
-            }
+            if (!response.ok) throw new Error('فشل في جلب المنتجات');
             return response.json();
         })
-        .then(products => {
-            renderProducts(products);
-        })
-        .catch(error => {
-            console.error('خطأ في جلب المنتجات:', error);
-        });
+        .then(products => renderProducts(products))
+        .catch(error => console.error('خطأ:', error));
 }
 
-// 2. دالة بناء بطاقات المنتجات في الصفحة
 function renderProducts(products) {
     const container = document.getElementById('products-container');
     if (!container) return;
 
     container.innerHTML = '';
-
     products.forEach(product => {
         const productCard = document.createElement('div');
         productCard.className = 'product-card';
-        
         productCard.innerHTML = `
             <img src="${product.image}" alt="${product.name}">
             <h3>${product.name}</h3>
             <p class="price">${product.price} د.ع</p>
             <button onclick="addToCart('${product.name}', ${product.price})">إضافة للسلة</button>
         `;
-        
         container.appendChild(productCard);
     });
 }
 
-// 3. دالة إضافة منتج للسلة وتحديث الواجهة
+// إضافة منتج للسلة
 function addToCart(name, price) {
     cart.push({ name, price });
     updateCartUI();
 }
 
-// 4. دالة حذف منتج من السلة
+// حذف منتج من السلة
 function removeFromCart(index) {
     cart.splice(index, 1);
     updateCartUI();
 }
 
-// 5. دالة تحديث عرض السلة في الصفحة
+// تحديث واجهة السلة والعدادات
 function updateCartUI() {
     const cartContainer = document.getElementById('cart-items');
     const totalContainer = document.getElementById('cart-total');
+    const countContainer = document.getElementById('cart-items-count');
+    const navCountContainer = document.getElementById('nav-cart-count');
+
+    // 1. تحديث العدادات (زر Nav + أسفل عنوان السلة)
+    const itemCount = cart.length;
+    if (navCountContainer) navCountContainer.innerText = itemCount;
+    if (countContainer) countContainer.innerText = `عدد المنتجات المطلوبة: ${itemCount} قطعة`;
 
     if (!cartContainer) return;
 
-    if (cart.length === 0) {
+    // 2. حالة السلة الفارغة
+    if (itemCount === 0) {
         cartContainer.innerHTML = '<p>السلة فارغة حالياً.</p>';
         if (totalContainer) totalContainer.innerText = 'المجموع الكلي: 0 د.ع';
         return;
     }
 
+    // 3. عرض المنتجات في السلة
     cartContainer.innerHTML = '';
     let total = 0;
 
     cart.forEach((item, index) => {
         total += item.price;
         const itemElement = document.createElement('div');
-        itemElement.className = 'cart-item';
         itemElement.style.cssText = 'display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px;';
         
         itemElement.innerHTML = `
@@ -92,7 +88,7 @@ function updateCartUI() {
     }
 }
 
-// 6. دالة إرسال الطلب عبر الواتساب
+// إرسال الطلب عبر الواتساب
 function sendWhatsApp() {
     const phoneNumber = "9647827573964"; 
 
@@ -110,6 +106,7 @@ function sendWhatsApp() {
         total += item.price;
     });
 
+    orderText += `\n*عدد القطع:* ${cart.length}`;
     orderText += `\n*المجموع الكلي:* ${total} د.ع`;
 
     const encodedMessage = encodeURIComponent(orderText);
