@@ -4,23 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D | متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css">
+    <!-- تعديل المسار ليكون نسبياً -->
+    <link rel="stylesheet" href="./css/style.css">
 </head>
-    <script src="js/cart.js"></script>
-<script src="js/app.js"></script>
 <body>
 
 <header>
     <h1>Toop3D</h1>
     <p>متجر الطباعة ثلاثية الأبعاد</p>
     <button onclick="sendWhatsApp()">
-    إتمام الطلب عبر واتساب
-</button>
+        إتمام الطلب عبر واتساب
+    </button>
 </header>
 
 <nav>
     <a href="#">الرئيسية</a>
-    <a href="#">المنتجات</a>
+    <a href="#products">المنتجات</a>
     <a href="#">اتصل بنا</a>
 </nav>
 
@@ -29,14 +28,23 @@
     <p>Filament - Models - 3D Printing Supplies</p>
 </section>
 
-    <section id="cart">
-    <h2>سلة المشتريات</h2>
+<!-- ✅ إضافة قسم عرض المنتجات المفقود -->
+<section id="products" class="products-section">
+    <h2>المنتجات</h2>
+    <div id="products-container"></div>
 </section>
 
+<section id="cart">
+    <h2>سلة المشتريات</h2>
+</section>
 
 <footer>
     Toop3D © 2026
 </footer>
+
+<!-- ✅ نقل ملفات الـ JS هنا في الأسفل قبل نهاية body مع تعديل المسارات -->
+<script src="./js/cart.js"></script>
+<script src="./js/app.js"></script>
 
 </body>
 </html>
