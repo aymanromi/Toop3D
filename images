@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "name": "خيط طباعة PLA أحمر",
+    "price": 25000,
+    "image": "./Red.jfif"
+  },
+  {
+    "id": "2",
+    "name": "خيط طباعة PLA بني",
+    "price": 25000,
+    "image": "./Brown.jfif"
+  },
+  {
+    "id": "3",
+    "name": "خيط PETG أسود",
+    "price": 25000,
+    "image": "./petg-black.jpg.jfif"
+  }
+]
