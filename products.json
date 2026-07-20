@@ -3,12 +3,12 @@
     "id": "1",
     "name": "خيط طباعة PLA",
     "price": 25000,
-    "image": "images/pla.jpg"
+    "image": "./images/Red.jfif"
   },
   {
     "id": "2",
     "name": "معدات طباعة 3D",
     "price": 15000,
-    "image": "images/supplies.jpg"
+    "image": "./images/Brown.jfif"
   }
 ]
