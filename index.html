@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=104">
+    <link rel="stylesheet" href="css/style.css?v=105">
     
     <style>
         /* ==========================================
@@ -103,6 +103,18 @@
             border-radius: 20px !important;
             font-size: 0.9em !important;
             font-weight: bold !important;
+        }
+
+        /* 💫 حركة وميض واهتزاز زر السلة عند إضافة منتج */
+        @keyframes cartBounce {
+            0%   { transform: scale(1); }
+            30%  { transform: scale(1.2) rotate(-6deg); background-color: #10b981 !important; } /* يتضخم ويتغير للأخضر المشجع */
+            60%  { transform: scale(0.95) rotate(6deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+
+        .cart-pop-animation {
+            animation: cartBounce 0.5s ease-in-out !important;
         }
 
         /* ==========================================
@@ -318,6 +330,6 @@
         </div>
     </div>
 
-    <script src="js/app.js?v=104"></script>
+    <script src="js/app.js?v=105"></script>
 </body>
 </html>
