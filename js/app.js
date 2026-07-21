@@ -1,93 +1,53 @@
-// قائمة المنتجات مع المسارات المباشرة والمطابقة لمجلد images
+// قائمة المنتجات مع إضافة التصنيف (category) لكل منتج
 const products = [
-    { 
-        id: 1, 
-        name: " PETG - أسود", 
-        price: 25000, 
-        image: "images/petg%20black.jpg"
-    },
-    { 
-        id: 2, 
-        name: " PETG - أزرق", 
-        price: 25000, 
-        image: "images/petg%20blue.jpg"
-    },
-    { 
-        id: 3, 
-        name: " PETG - شفاف", 
-        price: 28000, 
-        image: "images/petg%20clear.jpg"
-    },
-    { 
-        id: 4, 
-        name: " PETG - سماوي (Cyan)", 
-        price: 25000, 
-        image: "images/petg%20cyan.jpg"
-    },
-    { 
-        id: 5, 
-        name: " PETG - ذهبي (Golden)", 
-        price: 27000, 
-        image: "images/petg%20golden.jpg"
-    },
-    { 
-        id: 6, 
-        name: " PETG - أخضر", 
-        price: 25000, 
-        image: "images/petg%20green.jpg"
-    },
-    { 
-        id: 7, 
-        name: " PETG - بيج (Latte)", 
-        price: 25000, 
-        image: "images/petg%20latte.png"
-    },
-    { 
-        id: 8, 
-        name: " PETG - برتقالي", 
-        price: 25000, 
-        image: "images/petg%20orange.jpg"
-    },
-    { 
-        id: 9, 
-        name: " PETG - وردي (Pink)", 
-        price: 25000, 
-        image: "images/petg%20pink.jpg"
-    },
-    { 
-        id: 10, 
-        name: " PETG - بنفسجي (Taro Purple)", 
-        price: 25000, 
-        image: "images/petg%20taro%20purple.jpg"
-    },
-    { 
-        id: 11, 
-        name: " PETG - أصفر", 
-        price: 25000, 
-        image: "images/petg%20yellow.jpg"
-    }
+    { id: 1, category: "PETG", name: "PETG - أسود", price: 25000, image: "images/petg%20black.jpg" },
+    { id: 2, category: "PETG", name: "PETG - أزرق", price: 25000, image: "images/petg%20blue.jpg" },
+    { id: 3, category: "PETG", name: "PETG - شفاف", price: 28000, image: "images/petg%20clear.jpg" },
+    { id: 4, category: "PETG", name: "PETG - سماوي (Cyan)", price: 25000, image: "images/petg%20cyan.jpg" },
+    { id: 5, category: "PETG", name: "PETG - ذهبي (Golden)", price: 27000, image: "images/petg%20golden.jpg" },
+    { id: 6, category: "PETG", name: "PETG - أخضر", price: 25000, image: "images/petg%20green.jpg" },
+    { id: 7, category: "PETG", name: "PETG - بيج (Latte)", price: 25000, image: "images/petg%20latte.png" },
+    { id: 8, category: "PETG", name: "PETG - برتقالي", price: 25000, image: "images/petg%20orange.jpg" },
+    { id: 9, category: "PETG", name: "PETG - وردي (Pink)", price: 25000, image: "images/petg%20pink.jpg" },
+    { id: 10, category: "PETG", name: "PETG - بنفسجي (Taro Purple)", price: 25000, image: "images/petg%20taro%20purple.jpg" },
+    { id: 11, category: "PETG", name: "PETG - أصفر", price: 25000, image: "images/petg%20yellow.jpg" }
 ];
 
 let cart = [];
 
-// دالة عرض المنتجات داخل الشبكة
-function displayProducts() {
+// دالة عرض المنتجات داخل الشبكة بشكل محدد ومنظم
+function displayProducts(categoryFilter = 'ALL') {
     const container = document.getElementById('products-container');
     if (!container) return;
     
     container.innerHTML = '';
 
-    products.forEach(product => {
+    // تصفية المنتجات حسب الاختيار
+    const filteredProducts = (categoryFilter === 'ALL') 
+        ? products 
+        : products.filter(p => p.category === categoryFilter);
+
+    if (filteredProducts.length === 0) {
+        container.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 20px;">لا توجد منتجات متوفرة حالياً في هذا التصنيف.</p>';
+        return;
+    }
+
+    filteredProducts.forEach(product => {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
-            <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.src='Brown.jfif';">
-            <h3>${product.name}</h3>
-            <p class="price">${Number(product.price).toLocaleString()} د.ع</p>
-            <button onclick="addToCart(${product.id})">إضافة للسلة 🛒</button>
+            <img class="product-image" src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.src='images/placeholder.jpg';">
+            <h3 class="product-title">${product.name}</h3>
+            <p class="product-price">${Number(product.price).toLocaleString()} د.ع</p>
+            <button class="add-to-cart-btn" onclick="addToCart(${product.id})">إضافة للسلة 🛒</button>
         `;
         container.appendChild(card);
     });
+}
+
+// دالة التصفية المربوطة بالقائمة المنسدلة
+function filterCategory(category) {
+    displayProducts(category);
 }
 
 // إضافة منتج للسلة
@@ -174,9 +134,9 @@ function sendWhatsAppOrder() {
     window.open(url, '_blank');
 }
 
-// تشغيل الدالة تلقائياً
+// تشغيل الدالة تلقائياً عند تحميل الصفحة
 if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', displayProducts);
+    document.addEventListener('DOMContentLoaded', () => displayProducts('ALL'));
 } else {
-    displayProducts();
+    displayProducts('ALL');
 }
