@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=100">
+    <link rel="stylesheet" href="css/style.css?v=103">
     
-    <!-- 📌 تنسيق طوارئ مباشر لإجبار المتصفح على تصغير الصور وإظهار القائمة -->
     <style>
-        /* إجبار الشريط العلوي على الظهور */
+        /* ==========================================
+           1. شريط التنقل العلوي
+           ========================================== */
         .main-nav-bar {
             background-color: #0f172a !important;
             padding: 15px 25px !important;
@@ -28,54 +29,167 @@
             color: #38bdf8 !important;
         }
 
-        /* إجبار شبكة المنتجات وتثبيت حجم الصور */
-        .products-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
-            gap: 20px !important;
-            margin-top: 20px !important;
+        /* 🛒 أزرار إضافة للسلة باللون الأزرق التقني */
+        .add-to-cart-btn, .product-card button {
+            background-color: #2563eb !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 10px 15px !important;
+            border-radius: 6px !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            margin-top: 8px !important;
+            transition: background-color 0.2s ease !important;
         }
-        .product-card {
-            background: #ffffff !important;
-            border: 1px solid #e2e8f0 !important;
-            border-radius: 10px !important;
-            padding: 15px !important;
+        .add-to-cart-btn:hover, .product-card button:hover {
+            background-color: #1d4ed8 !important;
+        }
+
+        /* ==========================================
+           2. 🎈 زر السلة العائم الثابت (Floating Button)
+           ========================================== */
+        #cart-nav-btn {
+            position: fixed !important;
+            bottom: 25px !important;
+            left: 25px !important; /* ثابت في الزاوية اليسرى السفلى */
+            background-color: #2563eb !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 12px 22px !important;
+            border-radius: 50px !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4) !important;
+            cursor: pointer !important;
+            z-index: 9999 !important;
             display: flex !important;
-            flex-direction: column !important;
             align-items: center !important;
-            justify-content: space-between !important;
+            gap: 10px !important;
+            transition: transform 0.2s ease, background-color 0.2s ease !important;
+        }
+        #cart-nav-btn:hover {
+            transform: scale(1.05) !important;
+            background-color: #1d4ed8 !important;
+        }
+        #nav-cart-count {
+            background-color: #ffffff !important;
+            color: #2563eb !important;
+            padding: 2px 8px !important;
+            border-radius: 20px !important;
+            font-size: 0.9em !important;
+            font-weight: bold !important;
+        }
+
+        /* ==========================================
+           3. 🖼️ نافذة السلة المنبثقة (Modal Style)
+           ========================================== */
+        .modal {
+            display: none;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 100% !important;
+            background-color: rgba(15, 23, 42, 0.6) !important; /* خلفية معتمة */
+            backdrop-filter: blur(4px) !important;
+            z-index: 10000 !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 20px !important;
             box-sizing: border-box !important;
         }
-        /* ⚠️ السيطرة الصارمة على حجم الصور لعدم التضخم */
-        .product-card img, #products-container img {
-            width: 100% !important;
-            max-width: 100% !important;
-            height: 180px !important;
-            max-height: 180px !important;
-            object-fit: contain !important;
-            border-radius: 8px !important;
-            background-color: #f8fafc !important;
-            margin-bottom: 12px !important;
-            display: block !important;
+        
+        .modal.open, .modal[style*="display: block"], .modal[style*="display: flex"] {
+            display: flex !important;
         }
-        /* 🛒 إعادة لون وشكل زر إضافة للسلة */
-.add-to-cart-btn, .product-card button {
-    background-color: #2563eb !important; /* لون كحلي داكن راقي */
-    color: #ffffff !important;           /* لون النص أبيض */
-    border: none !important;
-    padding: 10px 15px !important;
-    border-radius: 6px !important;
-    font-weight: bold !important;
-    cursor: pointer !important;
-    width: 100% !important;
-    margin-top: 8px !important;
-    transition: background-color 0.2s ease !important;
-}
 
-/* لون الزر عند تمرير الماوس عليه */
-.add-to-cart-btn:hover, .product-card button:hover {
-    background-color: #2563eb !important; /* يتغير للأزرق المميز */
-}
+        .modal-content {
+            background-color: #ffffff !important;
+            width: 100% !important;
+            max-width: 500px !important;
+            max-height: 85vh !important;
+            border-radius: 16px !important;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
+            display: flex !important;
+            flex-direction: column !important;
+            overflow: hidden !important;
+            animation: modalSlideUp 0.3s ease !important;
+        }
+
+        @keyframes modalSlideUp {
+            from { transform: translateY(30px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            padding: 18px 20px !important;
+            background-color: #f8fafc !important;
+            border-bottom: 1px solid #e2e8f0 !important;
+            display: flex !important;
+            justify-content: space-between !important;
+            align-items: center !important;
+        }
+
+        .modal-header h2 {
+            margin: 0 !important;
+            font-size: 1.3em !important;
+            color: #0f172a !important;
+        }
+
+        .close-btn {
+            background: none !important;
+            border: none !important;
+            font-size: 1.4em !important;
+            cursor: pointer !important;
+            color: #64748b !important;
+        }
+
+        .cart-body {
+            padding: 20px !important;
+            overflow-y: auto !important;
+            flex-grow: 1 !important;
+        }
+
+        .modal-footer {
+            padding: 18px 20px !important;
+            background-color: #f8fafc !important;
+            border-top: 1px solid #e2e8f0 !important;
+            display: flex !important;
+            flex-direction: column !important;
+            gap: 12px !important;
+        }
+
+        .total-price-box {
+            display: flex !important;
+            justify-content: space-between !important;
+            font-size: 1.2em !important;
+            font-weight: bold !important;
+            color: #0f172a !important;
+        }
+
+        /* 📱 زر الواتساب الأخضر الاحترافي */
+        .whatsapp-btn, #checkout-whatsapp-btn {
+            background-color: #25d366 !important;
+            color: #ffffff !important;
+            border: none !important;
+            padding: 14px 20px !important;
+            border-radius: 10px !important;
+            font-size: 1.1em !important;
+            font-weight: bold !important;
+            cursor: pointer !important;
+            width: 100% !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 8px !important;
+            box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3) !important;
+            transition: background-color 0.2s ease !important;
+        }
+
+        .whatsapp-btn:hover, #checkout-whatsapp-btn:hover {
+            background-color: #1ebc57 !important;
+        }
     </style>
 </head>
 <body>
@@ -113,7 +227,7 @@
         </div>
     </header>
 
-    <!-- 2. شريط التنقل العلوي الرئيسي (الرئيسية والمنتجات) -->
+    <!-- 2. شريط التنقل العلوي -->
     <nav class="main-nav-bar">
         <a href="#" class="active">الرئيسية</a>
         <a href="#products">المنتجات</a>
@@ -138,7 +252,6 @@
             <div class="products-header">
                 <h2 style="margin: 0;">قائمة المنتجات</h2>
                 
-                <!-- القائمة المنسدلة لاختيار الخامات -->
                 <div class="filter-box">
                     <label for="category-select" style="font-weight: bold; margin-left: 5px;">اختر الخامة:</label>
                     <select id="category-select" onchange="filterCategory(this.value)" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: bold;">
@@ -152,16 +265,17 @@
                 </div>
             </div>
 
-            <!-- شبكة عرض كروت المنتجات -->
+            <!-- شبكة عرض المنتجات (تستخدم تنسيق style.css الأصلي دون فرض أبعاد) -->
             <div id="products-container" class="products-grid"></div>
         </section>
     </main>
 
-    <!-- زر السلة والنافذة المنبثقة -->
+    <!-- 🎈 5. زر السلة العائم الثابت -->
     <button id="cart-nav-btn" onclick="toggleCart()">
         🛒 السلة <span id="nav-cart-count">0</span>
     </button>
 
+    <!-- 🖼️ 6. النافذة المنبثقة للسلة -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -175,12 +289,12 @@
                     <span id="cart-total-price">0 د.ع</span>
                 </div>
                 <button id="checkout-whatsapp-btn" onclick="sendWhatsAppOrder()" class="whatsapp-btn">
-                    إتمام الطلب عبر الواتساب 📱
+                    💬 إتمام الطلب عبر الواتساب
                 </button>
             </div>
         </div>
     </div>
 
-    <script src="js/app.js?v=100"></script>
+    <script src="js/app.js?v=103"></script>
 </body>
 </html>
