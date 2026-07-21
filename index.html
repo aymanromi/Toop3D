@@ -4,11 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=10">
+    <link rel="stylesheet" href="css/style.css?v=100">
+    
+    <!-- 📌 تنسيق طوارئ مباشر لإجبار المتصفح على تصغير الصور وإظهار القائمة -->
+    <style>
+        /* إجبار الشريط العلوي على الظهور */
+        .main-nav-bar {
+            background-color: #0f172a !important;
+            padding: 15px 25px !important;
+            display: flex !important;
+            gap: 25px !important;
+            align-items: center !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+        }
+        .main-nav-bar a {
+            color: #ffffff !important;
+            text-decoration: none !important;
+            font-weight: bold !important;
+            font-size: 1.1em !important;
+        }
+        .main-nav-bar a.active {
+            color: #38bdf8 !important;
+        }
+
+        /* إجبار شبكة المنتجات وتثبيت حجم الصور */
+        .products-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+        .product-card {
+            background: #ffffff !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 10px !important;
+            padding: 15px !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            box-sizing: border-box !important;
+        }
+        /* ⚠️ السيطرة الصارمة على حجم الصور لعدم التضخم */
+        .product-card img, #products-container img {
+            width: 100% !important;
+            max-width: 100% !important;
+            height: 180px !important;
+            max-height: 180px !important;
+            object-fit: contain !important;
+            border-radius: 8px !important;
+            background-color: #f8fafc !important;
+            margin-bottom: 12px !important;
+            display: block !important;
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 1. البنر العلوي الاحترافي -->
+    <!-- 1. البنر العلوي (الشعار والكبسولات) -->
     <header class="top-brand-banner">
         <div class="banner-container">
             <div class="brand-left">
@@ -41,10 +95,10 @@
         </div>
     </header>
 
-    <!-- 2. شريط التنقل العلوي المرتب (الرئيسية والمنتجات فقط) -->
-    <nav class="main-nav">
-        <a href="#" class="nav-link active">الرئيسية</a>
-        <a href="#products" class="nav-link">المنتجات</a>
+    <!-- 2. شريط التنقل العلوي الرئيسي (الرئيسية والمنتجات) -->
+    <nav class="main-nav-bar">
+        <a href="#" class="active">الرئيسية</a>
+        <a href="#products">المنتجات</a>
     </nav>
 
     <!-- 3. قسم الهيرو -->
@@ -60,16 +114,16 @@
         </div>
     </section>
 
-    <!-- 4. قسم عرض المنتجات مع تصفية الخامات في الأسفل -->
+    <!-- 4. قسم عرض المنتجات -->
     <main class="main-content">
         <section id="products">
             <div class="products-header">
-                <h2>قائمة المنتجات</h2>
+                <h2 style="margin: 0;">قائمة المنتجات</h2>
                 
-                <!-- قائمة تصفية التصنيفات المنسدلة المرتبة -->
+                <!-- القائمة المنسدلة لاختيار الخامات -->
                 <div class="filter-box">
-                    <label for="category-select">اختر الخامة:</label>
-                    <select id="category-select" onchange="filterCategory(this.value)">
+                    <label for="category-select" style="font-weight: bold; margin-left: 5px;">اختر الخامة:</label>
+                    <select id="category-select" onchange="filterCategory(this.value)" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: bold;">
                         <option value="ALL">جميع المنتجات</option>
                         <option value="PLA">خيوط PLA</option>
                         <option value="PETG">خيوط PETG</option>
@@ -85,7 +139,7 @@
         </section>
     </main>
 
-    <!-- زر السلة العائم والنافذة المنبثقة -->
+    <!-- زر السلة والنافذة المنبثقة -->
     <button id="cart-nav-btn" onclick="toggleCart()">
         🛒 السلة <span id="nav-cart-count">0</span>
     </button>
@@ -109,6 +163,6 @@
         </div>
     </div>
 
-    <script src="js/app.js?v=10"></script>
+    <script src="js/app.js?v=100"></script>
 </body>
 </html>
