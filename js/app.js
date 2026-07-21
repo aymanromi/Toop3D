@@ -2,67 +2,67 @@
 const products = [
     { 
         id: 1, 
-        name: "خيط PETG - أسود", 
+        name: " PETG - أسود", 
         price: 25000, 
         image: "images/petg%20black.jpg"
     },
     { 
         id: 2, 
-        name: "خيط PETG - أزرق", 
+        name: " PETG - أزرق", 
         price: 25000, 
         image: "images/petg%20blue.jpg"
     },
     { 
         id: 3, 
-        name: "خيط PETG - شفاف", 
+        name: " PETG - شفاف", 
         price: 28000, 
         image: "images/petg%20clear.jpg"
     },
     { 
         id: 4, 
-        name: "خيط PETG - سماوي (Cyan)", 
+        name: " PETG - سماوي (Cyan)", 
         price: 25000, 
         image: "images/petg%20cyan.jpg"
     },
     { 
         id: 5, 
-        name: "خيط PETG - ذهبي (Golden)", 
+        name: " PETG - ذهبي (Golden)", 
         price: 27000, 
         image: "images/petg%20golden.jpg"
     },
     { 
         id: 6, 
-        name: "خيط PETG - أخضر", 
+        name: " PETG - أخضر", 
         price: 25000, 
         image: "images/petg%20green.jpg"
     },
     { 
         id: 7, 
-        name: "خيط PETG - بيج (Latte)", 
+        name: " PETG - بيج (Latte)", 
         price: 25000, 
         image: "images/petg%20latte.png"
     },
     { 
         id: 8, 
-        name: "خيط PETG - برتقالي", 
+        name: " PETG - برتقالي", 
         price: 25000, 
         image: "images/petg%20orange.jpg"
     },
     { 
         id: 9, 
-        name: "خيط PETG - وردي (Pink)", 
+        name: " PETG - وردي (Pink)", 
         price: 25000, 
         image: "images/petg%20pink.jpg"
     },
     { 
         id: 10, 
-        name: "خيط PETG - بنفسجي (Taro Purple)", 
+        name: " PETG - بنفسجي (Taro Purple)", 
         price: 25000, 
         image: "images/petg%20taro%20purple.jpg"
     },
     { 
         id: 11, 
-        name: "خيط PETG - أصفر", 
+        name: " PETG - أصفر", 
         price: 25000, 
         image: "images/petg%20yellow.jpg"
     }
