@@ -4,31 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=3">
+    <link rel="stylesheet" href="css/style.css?v=4">
 </head>
 <body>
 
-    <!-- الهيدر الرئيسي للمتجر -->
-    <header class="main-header">
-        <h1>Toop3D</h1>
-        <p>متجر الطباعة ثلاثية الأبعاد</p>
+    <!-- الهيدر الرئيسي -->
+    <header style="background-color: #0f172a; color: white; text-align: center; padding: 20px 10px;">
+        <h1 style="margin: 0; font-size: 2em;">Toop3D</h1>
+        <p style="margin: 5px 0 0 0; opacity: 0.8;">متجر الطباعة ثلاثية الأبعاد</p>
     </header>
 
-    <!-- 📌 شريط التنقل العلوي يشمل الرئيسية والمنتجات والتصنيفات جنباً إلى جنب -->
-    <nav class="navbar" style="display: flex; align-items: center; gap: 15px; overflow-x: auto; white-space: nowrap; padding: 10px 20px;">
-        <a href="#" class="nav-link">الرئيسية</a>
-        <a href="#products" class="nav-link active-link">المنتجات</a>
+    <!-- شريط التنقل العلوي مع القائمة المنسدلة للتصنيفات -->
+    <nav class="main-nav">
+        <a href="#" class="nav-link active">الرئيسية</a>
         
-        <!-- فاصل بسيط بين الصفحات والتصنيفات -->
-        <span style="color: #cbd5e1;">|</span>
-
-        <!-- أزرار التصنيفات بجانب المنتجات -->
-        <button class="sub-cat-btn active" onclick="filterCategory('ALL', this)">الكل</button>
-        <button class="sub-cat-btn" onclick="filterCategory('PLA', this)">PLA Filament</button>
-        <button class="sub-cat-btn" onclick="filterCategory('PETG', this)">PETG Filament</button>
-        <button class="sub-cat-btn" onclick="filterCategory('TPU', this)">TPU (Flex)</button>
-        <button class="sub-cat-btn" onclick="filterCategory('ABS', this)">ABS / ASA</button>
-        <button class="sub-cat-btn" onclick="filterCategory('RESIN', this)">3D Resin</button>
+        <!-- عنصر المنتجات مع القائمة العمودية المنسدلة -->
+        <div class="dropdown">
+            <a href="#products" class="nav-link dropbtn">المنتجات ▾</a>
+            <div class="dropdown-content">
+                <a href="#products" onclick="filterCategory('ALL', this)">كل المنتجات</a>
+                <a href="#products" onclick="filterCategory('PLA', this)">خيوط PLA</a>
+                <a href="#products" onclick="filterCategory('PETG', this)">خيوط PETG</a>
+                <a href="#products" onclick="filterCategory('TPU', this)">خيوط TPU (Flex)</a>
+                <a href="#products" onclick="filterCategory('ABS', this)">خيوط ABS / ASA</a>
+                <a href="#products" onclick="filterCategory('RESIN', this)">راتينج 3D Resin</a>
+            </div>
+        </div>
     </nav>
 
     <!-- قسم الهيرو (Hero Section) -->
@@ -48,19 +49,44 @@
         </div>
     </section>
 
-    <!-- قسم المنتجات الرئيسي -->
-    <main style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
+    <!-- قسم واجهة المنتجات -->
+    <main style="max-width: 1000px; margin: 30px auto; padding: 0 20px;">
         <section id="products">
-            <h2 style="border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #0f172a; margin-bottom: 20px;">
-                قائمة المنتجات
-            </h2>
-
-            <!-- حاوية عرض المنتجات المفلترة -->
+            <h2 style="border-bottom: 2px solid #2563eb; padding-bottom: 8px; color: #0f172a;">المنتجات</h2>
             <div id="products-container" class="products-grid"></div>
         </section>
     </main>
 
-    <!-- ملف الجافاسكربت -->
-    <script src="js/app.js?v=3"></script>
+    <!-- الهوتر -->
+    <footer style="text-align: center; padding: 20px; background-color: #0f172a; color: white; margin-top: 50px;">
+        Toop3D © 2026
+    </footer>
+
+    <!-- زر السلة العائم والنافذة المنبثقة -->
+    <button id="cart-nav-btn" onclick="toggleCart()">
+        🛒 السلة <span id="nav-cart-count">0</span>
+    </button>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+                <h2 style="margin: 0;">سلة التسوق</h2>
+                <button onclick="toggleCart()" style="background: none; border: none; font-size: 1.5em; cursor: pointer;">✕</button>
+            </div>
+            <div id="cart-items" style="margin: 20px 0; max-height: 250px; overflow-y: auto;"></div>
+            <div style="border-top: 1px solid #ddd; padding-top: 15px;">
+                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 1.1em; margin-bottom: 15px;">
+                    <span>المجموع الكلي:</span>
+                    <span id="cart-total-price">0 د.ع</span>
+                </div>
+                <button id="checkout-whatsapp-btn" onclick="sendWhatsAppOrder()" style="background-color: #25d366; color: white; border: none; width: 100%; padding: 12px; border-radius: 8px; font-weight: bold; font-size: 1em; cursor: pointer;">
+                    إتمام الطلب عبر الواتساب 📱
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- استدعاء الجافاسكربت -->
+    <script src="js/app.js?v=4"></script>
 </body>
 </html>
