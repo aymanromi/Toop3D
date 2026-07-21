@@ -1,42 +1,70 @@
-// قائمة المنتجات
-// قائمة المنتجات مع المسارات الصحيحة للصور
 // قائمة المنتجات مع المسارات المباشرة والمطابقة لمجلد images
 const products = [
     { 
         id: 1, 
         name: "خيط PETG - أسود", 
         price: 25000, 
-        image: "images/petg black.jpg"
+        image: "images/petg%20black.jpg"
     },
     { 
         id: 2, 
         name: "خيط PETG - أزرق", 
         price: 25000, 
-        image: "images/petg blue.jpg"
+        image: "images/petg%20blue.jpg"
     },
     { 
         id: 3, 
         name: "خيط PETG - شفاف", 
         price: 28000, 
-        image: "images/petg clear.jpg"
+        image: "images/petg%20clear.jpg"
     },
     { 
         id: 4, 
-        name: "خيط PETG - بيج (Latte)", 
+        name: "خيط PETG - سماوي (Cyan)", 
         price: 25000, 
-        image: "images/petg latte.png" // 👈 انتبه هذا الملف بصيغة png
+        image: "images/petg%20cyan.jpg"
     },
     { 
         id: 5, 
-        name: "خيط PETG - برتقالي", 
-        price: 25000, 
-        image: "images/petg orange.jpg"
+        name: "خيط PETG - ذهبي (Golden)", 
+        price: 27000, 
+        image: "images/petg%20golden.jpg"
     },
     { 
         id: 6, 
+        name: "خيط PETG - أخضر", 
+        price: 25000, 
+        image: "images/petg%20green.jpg"
+    },
+    { 
+        id: 7, 
+        name: "خيط PETG - بيج (Latte)", 
+        price: 25000, 
+        image: "images/petg%20latte.png"
+    },
+    { 
+        id: 8, 
+        name: "خيط PETG - برتقالي", 
+        price: 25000, 
+        image: "images/petg%20orange.jpg"
+    },
+    { 
+        id: 9, 
+        name: "خيط PETG - وردي (Pink)", 
+        price: 25000, 
+        image: "images/petg%20pink.jpg"
+    },
+    { 
+        id: 10, 
         name: "خيط PETG - بنفسجي (Taro Purple)", 
         price: 25000, 
-        image: "images/petg taro purple.jpg"
+        image: "images/petg%20taro%20purple.jpg"
+    },
+    { 
+        id: 11, 
+        name: "خيط PETG - أصفر", 
+        price: 25000, 
+        image: "images/petg%20yellow.jpg"
     }
 ];
 
@@ -53,9 +81,9 @@ function displayProducts() {
         const card = document.createElement('div');
         card.className = 'product-card';
         card.innerHTML = `
-            <img src="${product.image}" alt="${product.name}">
+            <img src="${product.image}" alt="${product.name}" onerror="this.onerror=null; this.src='Brown.jfif';">
             <h3>${product.name}</h3>
-            <p class="price">${product.price.toLocaleString()} د.ع</p>
+            <p class="price">${Number(product.price).toLocaleString()} د.ع</p>
             <button onclick="addToCart(${product.id})">إضافة للسلة 🛒</button>
         `;
         container.appendChild(card);
@@ -77,7 +105,7 @@ function addToCart(productId) {
     updateCartUI();
 }
 
-// تحديث الواجهة وتفاصيل السلة
+// تحديث واجهة السلة
 function updateCartUI() {
     const cartCount = document.getElementById('nav-cart-count');
     const cartItems = document.getElementById('cart-items');
@@ -96,7 +124,7 @@ function updateCartUI() {
         } else {
             cart.forEach(item => {
                 cartItems.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid #f1f5f9; padding-bottom:5px;">
                         <div>
                             <strong>${item.name}</strong>
                             <br><small>${item.price.toLocaleString()} × ${item.quantity}</small>
@@ -115,15 +143,11 @@ function removeFromCart(productId) {
     updateCartUI();
 }
 
-// إظهار/إخفاء النافذة المنبثقة
+// إظهار وإخفاء السلة
 function toggleCart() {
     const modal = document.getElementById('cart-modal');
     if (modal) {
-        if (modal.style.display === 'flex') {
-            modal.style.display = 'none';
-        } else {
-            modal.style.display = 'flex';
-        }
+        modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
     }
 }
 
@@ -145,13 +169,14 @@ function sendWhatsAppOrder() {
 
     message += `\nالمجموع الكلي: ${total.toLocaleString()} د.ع`;
 
-    const phone = "9647000000000"; // ضع رقم الواتساب الخاص بك هنا
+    const phone = "9647000000000"; // 👈 استبدل هذا برقم الواتساب الخاص بك
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank');
 }
 
-// تشغيل العرض عند تحميل الصفحة
-document.addEventListener('DOMContentLoaded', () => {
+// تشغيل الدالة تلقائياً
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', displayProducts);
+} else {
     displayProducts();
-    updateCartUI();
-});
+}
