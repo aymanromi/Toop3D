@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=105">
+    <link rel="stylesheet" href="css/style.css?v=107">
     
     <style>
         /* ==========================================
@@ -29,6 +29,30 @@
             color: #38bdf8 !important;
         }
 
+        /* ==========================================
+           2. 🖼️ إجبار ضبط صور المنتجات (للحاسبة والهاتف)
+           ========================================== */
+        .products-grid {
+            display: grid !important;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+            gap: 20px !important;
+            margin-top: 20px !important;
+        }
+
+        /* منع ضخامة الصور على الحاسبة */
+        .product-card img, 
+        #products-container img, 
+        .products-grid img {
+            width: 100% !important;
+            height: 180px !important;       /* ارتفاع ثابت ومتناسق */
+            max-height: 180px !important;
+            object-fit: contain !important; /* إظهار المنتج بالكامل بدون تشويه */
+            border-radius: 8px !important;
+            background-color: #f8fafc !important;
+            margin-bottom: 12px !important;
+            display: block !important;
+        }
+
         /* 🛒 أزرار إضافة للسلة باللون الأزرق التقني */
         .add-to-cart-btn, .product-card button {
             background-color: #2563eb !important;
@@ -47,12 +71,12 @@
         }
 
         /* ==========================================
-           2. 🎈 زر السلة العائم الثابت (Floating Button)
+           3. 🎈 زر السلة العائم الثابت (Floating Button)
            ========================================== */
         #cart-nav-btn {
             position: fixed !important;
             bottom: 25px !important;
-            left: 25px !important; /* ثابت في الزاوية اليسرى السفلى */
+            left: 25px !important;
             background-color: #2563eb !important;
             color: #ffffff !important;
             border: none !important;
@@ -94,7 +118,7 @@
         }
 
         /* ==========================================
-           3. 🖼️ نافذة السلة المنبثقة (Modal Style)
+           4. 🖼️ نافذة السلة المنبثقة (Modal Style)
            ========================================== */
         .modal {
             display: none;
