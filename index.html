@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -14,21 +14,22 @@
         <p>متجر الطباعة ثلاثية الأبعاد</p>
     </header>
 
-    <!-- شريط التنقل العلوي -->
-    <nav class="navbar">
+    <!-- 📌 شريط التنقل العلوي يشمل الرئيسية والمنتجات والتصنيفات جنباً إلى جنب -->
+    <nav class="navbar" style="display: flex; align-items: center; gap: 15px; overflow-x: auto; white-space: nowrap; padding: 10px 20px;">
         <a href="#" class="nav-link">الرئيسية</a>
         <a href="#products" class="nav-link active-link">المنتجات</a>
-    </nav>
+        
+        <!-- فاصل بسيط بين الصفحات والتصنيفات -->
+        <span style="color: #cbd5e1;">|</span>
 
-    <!-- 📌 شريط التصنيفات الرئيسية (تحت كلمة المنتجات مباشرة) -->
-    <div class="sub-header-categories">
+        <!-- أزرار التصنيفات بجانب المنتجات -->
         <button class="sub-cat-btn active" onclick="filterCategory('ALL', this)">الكل</button>
         <button class="sub-cat-btn" onclick="filterCategory('PLA', this)">PLA Filament</button>
         <button class="sub-cat-btn" onclick="filterCategory('PETG', this)">PETG Filament</button>
         <button class="sub-cat-btn" onclick="filterCategory('TPU', this)">TPU (Flex)</button>
         <button class="sub-cat-btn" onclick="filterCategory('ABS', this)">ABS / ASA</button>
         <button class="sub-cat-btn" onclick="filterCategory('RESIN', this)">3D Resin</button>
-    </div>
+    </nav>
 
     <!-- قسم الهيرو (Hero Section) -->
     <section class="hero-section">
@@ -60,6 +61,6 @@
     </main>
 
     <!-- ملف الجافاسكربت -->
-    <script src="js/app.js?v=2"></script>
+    <script src="js/app.js?v=3"></script>
 </body>
 </html>
