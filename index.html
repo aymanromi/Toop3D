@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
+    <title>Toop3D - متجر مستلزمات الطباعة ثلاثية الأبعاد</title>
     <link rel="stylesheet" href="css/style.css?v=105">
     
     <style>
         /* ==========================================
-           1. شريط التنقل العلوي
+           1. شريط التنقل والتصميم العام
            ========================================== */
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8fafc;
+            color: #0f172a;
+        }
+
         .main-nav-bar {
             background-color: #0f172a !important;
             padding: 15px 25px !important;
@@ -18,6 +26,9 @@
             align-items: center !important;
             width: 100% !important;
             box-sizing: border-box !important;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
         .main-nav-bar a {
             color: #ffffff !important;
@@ -30,40 +41,81 @@
         }
 
         /* ==========================================
-           2. 🖼️ إجبار ضبط حجم الصور لمنع التضخم
+           2. شبكة المنتجات بطاقات العرض
            ========================================== */
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .products-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            background: #ffffff;
+            padding: 15px 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
         .products-grid {
             display: grid !important;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)) !important;
+            grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)) !important;
             gap: 20px !important;
-            margin-top: 20px !important;
         }
 
-        /* تحديد حجم كروت المنتجات والصور بداخلها */
-        .product-card img, 
-        #products-container img, 
-        .products-grid img {
+        .product-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card img {
             width: 100% !important;
-            height: 200px !important; /* ارتفاع ثابت ومتناسق لجميع الصور */
-            max-height: 200px !important;
-            object-fit: contain !important; /* إظهار المنتج بالكامل دون اقتطاع */
+            height: 180px !important;
+            object-fit: contain !important;
             border-radius: 8px !important;
-            background-color: #f8fafc !important;
+            background-color: #f1f5f9 !important;
             margin-bottom: 12px !important;
-            display: block !important;
         }
 
-        /* 🛒 أزرار إضافة للسلة باللون الأزرق */
+        .product-title {
+            font-size: 1.05em;
+            font-weight: bold;
+            margin: 0 0 8px 0;
+            color: #1e293b;
+        }
+
+        .product-price {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+
+        /* 🛒 أزرار إضافة للسلة */
         .add-to-cart-btn, .product-card button {
             background-color: #2563eb !important;
             color: #ffffff !important;
             border: none !important;
             padding: 10px 15px !important;
-            border-radius: 6px !important;
+            border-radius: 8px !important;
             font-weight: bold !important;
             cursor: pointer !important;
             width: 100% !important;
-            margin-top: 8px !important;
             transition: background-color 0.2s ease !important;
         }
         .add-to-cart-btn:hover, .product-card button:hover {
@@ -71,12 +123,12 @@
         }
 
         /* ==========================================
-           3. 🎈 زر السلة العائم الثابت (Floating Button)
+           3. زر السلة العائم (Floating Button)
            ========================================== */
         #cart-nav-btn {
             position: fixed !important;
             bottom: 25px !important;
-            left: 25px !important; /* ثابت في الزاوية اليسرى السفلى */
+            left: 25px !important;
             background-color: #2563eb !important;
             color: #ffffff !important;
             border: none !important;
@@ -105,10 +157,9 @@
             font-weight: bold !important;
         }
 
-        /* 💫 حركة وميض واهتزاز زر السلة عند إضافة منتج */
         @keyframes cartBounce {
             0%   { transform: scale(1); }
-            30%  { transform: scale(1.2) rotate(-6deg); background-color: #10b981 !important; } /* يتضخم ويتغير للأخضر المشجع */
+            30%  { transform: scale(1.2) rotate(-6deg); background-color: #10b981 !important; }
             60%  { transform: scale(0.95) rotate(6deg); }
             100% { transform: scale(1) rotate(0deg); }
         }
@@ -118,7 +169,7 @@
         }
 
         /* ==========================================
-           4. 🖼️ نافذة السلة المنبثقة (Modal Style)
+           4. نافذة السلة المنبثقة (Modal)
            ========================================== */
         .modal {
             display: none;
@@ -136,14 +187,14 @@
             box-sizing: border-box !important;
         }
         
-        .modal.open, .modal[style*="display: block"], .modal[style*="display: flex"] {
+        .modal.open {
             display: flex !important;
         }
 
         .modal-content {
             background-color: #ffffff !important;
             width: 100% !important;
-            max-width: 500px !important;
+            max-width: 480px !important;
             max-height: 85vh !important;
             border-radius: 16px !important;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
@@ -187,6 +238,24 @@
             flex-grow: 1 !important;
         }
 
+        .cart-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .qty-btn {
+            background: #e2e8f0;
+            border: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
         .modal-footer {
             padding: 18px 20px !important;
             background-color: #f8fafc !important;
@@ -204,8 +273,7 @@
             color: #0f172a !important;
         }
 
-        /* 📱 زر الواتساب الأخضر الاحترافي */
-        .whatsapp-btn, #checkout-whatsapp-btn {
+        .whatsapp-btn {
             background-color: #25d366 !important;
             color: #ffffff !important;
             border: none !important;
@@ -223,14 +291,14 @@
             transition: background-color 0.2s ease !important;
         }
 
-        .whatsapp-btn:hover, #checkout-whatsapp-btn:hover {
+        .whatsapp-btn:hover {
             background-color: #1ebc57 !important;
         }
     </style>
 </head>
 <body>
 
-    <!-- 1. البنر العلوي (الشعار والكبسولات) -->
+    <!-- 1. البنر العلوي -->
     <header class="top-brand-banner">
         <div class="banner-container">
             <div class="brand-left">
@@ -238,26 +306,6 @@
                 <div class="brand-title-box">
                     <h1 class="company-name">Toop3D TECHNOLOGY CO., LTD.</h1>
                     <p class="company-sub">10+ Years of Industry Experience | Specializing in 3D printer material</p>
-                </div>
-            </div>
-
-            <div class="banner-divider"></div>
-
-            <div class="brand-right">
-                <div class="badges-row">
-                    <span class="badge-icon">ISO</span>
-                    <span class="badge-icon">UKCA</span>
-                    <span class="badge-icon">TUV</span>
-                    <span class="badge-icon">MSDS</span>
-                    <span class="badge-icon">RoHS</span>
-                </div>
-                <div class="main-products-row">
-                    <span class="product-tag">3D printer filament</span>
-                    <span class="product-tag">matte filament</span>
-                    <span class="product-tag">petg filament</span>
-                    <span class="product-tag">abs filament</span>
-                    <span class="product-tag">pla filament</span>
-                    <span class="product-tag">3D resin</span>
                 </div>
             </div>
         </div>
@@ -269,20 +317,7 @@
         <a href="#products">المنتجات</a>
     </nav>
 
-    <!-- 3. قسم الهيرو -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">Toop3D <span>High Speed PETG HF Filament</span></h1>
-            <ul class="hero-features">
-                <li>✓ High-Speed Printing (طباعة عالية السرعة)</li>
-                <li>✓ Excellent Toughness (متانة ممتازة)</li>
-                <li>✓ Strong Layer Adhesion (التحام قوي للطبقات)</li>
-            </ul>
-            <a href="#products" class="btn-primary">تسوق الآن / Buy Now</a>
-        </div>
-    </section>
-
-    <!-- 4. قسم عرض المنتجات -->
+    <!-- 3. قسم عرض المنتجات -->
     <main class="main-content">
         <section id="products">
             <div class="products-header">
@@ -290,7 +325,7 @@
                 
                 <div class="filter-box">
                     <label for="category-select" style="font-weight: bold; margin-left: 5px;">اختر الخامة:</label>
-                    <select id="category-select" onchange="filterCategory(this.value)" style="padding: 6px 12px; border-radius: 6px; border: 1px solid #cbd5e1; font-weight: bold;">
+                    <select id="category-select" onchange="filterCategory(this.value)" style="padding: 8px 12px; border-radius: 8px; border: 1px solid #cbd5e1; font-weight: bold;">
                         <option value="ALL">جميع المنتجات</option>
                         <option value="PLA">خيوط PLA</option>
                         <option value="PETG">خيوط PETG</option>
@@ -301,23 +336,27 @@
                 </div>
             </div>
 
-            <div id="products-container" class="products-grid"></div>
+            <div id="products-container" class="products-grid">
+                <!-- يتم تحميل المنتجات هنا ديناميكياً بواسطة JavaScript -->
+            </div>
         </section>
     </main>
 
-    <!-- 🎈 5. زر السلة العائم الثابت -->
+    <!-- 4. زر السلة العائم -->
     <button id="cart-nav-btn" onclick="toggleCart()">
         🛒 السلة <span id="nav-cart-count">0</span>
     </button>
 
-    <!-- 🖼️ 6. النافذة المنبثقة للسلة -->
+    <!-- 5. النافذة المنبثقة للسلة -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
                 <h2>سلة التسوق</h2>
                 <button onclick="toggleCart()" class="close-btn">✕</button>
             </div>
-            <div id="cart-items" class="cart-body"></div>
+            <div id="cart-items" class="cart-body">
+                <!-- عناصر السلة تُعرض هنا -->
+            </div>
             <div class="modal-footer">
                 <div class="total-price-box">
                     <span>المجموع الكلي:</span>
@@ -330,6 +369,145 @@
         </div>
     </div>
 
-    <script src="js/app.js?v=105"></script>
+    <!-- 6. برمجة السلة وتجربة المستخدم (JavaScript المدمج) -->
+    <script>
+        // قائمة المنتجات الإفتراضية (أو القادمة من قاعدة البيانات)
+        const productsData = [
+            { id: 1, name: "خيوط PETG High Speed", category: "PETG", price: 18000, img: "images/petg.jpg" },
+            { id: 2, name: "خيوط PLA Matte Premium", category: "PLA", price: 16000, img: "images/pla.jpg" },
+            { id: 3, name: "خيوط TPU المرنة", category: "TPU", price: 22000, img: "images/tpu.jpg" },
+            { id: 4, name: "خيوط ABS المقاومة للحرارة", category: "ABS", price: 19000, img: "images/abs.jpg" },
+            { id: 5, name: "راتينج 3D Resin Standard", category: "RESIN", price: 25000, img: "images/resin.jpg" }
+        ];
+
+        let cart = [];
+
+        // عرض المنتجات عند تحميل الصفحة
+        function renderProducts(filter = "ALL") {
+            const container = document.getElementById("products-container");
+            container.innerHTML = "";
+
+            const filtered = filter === "ALL" 
+                ? productsData 
+                : productsData.filter(p => p.category === filter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: #64748b;">لا توجد منتجات متوفرة في هذه الفئة حالياً.</p>`;
+                return;
+            }
+
+            filtered.forEach(p => {
+                const card = document.createElement("div");
+                card.className = "product-card";
+                card.innerHTML = `
+                    <img src="${p.img}" alt="${p.name}" onerror="this.src='https://via.placeholder.com/200?text=Toop3D'">
+                    <h3 class="product-title">${p.name}</h3>
+                    <div class="product-price">${p.price.toLocaleString()} د.ع</div>
+                    <button class="add-to-cart-btn" onclick="addToCart(${p.id})">إضافة إلى السلة 🛒</button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // تصفية الفئات
+        function filterCategory(category) {
+            renderProducts(category);
+        }
+
+        // إضافة عنصر للسلة
+        function addToCart(productId) {
+            const product = productsData.find(p => p.id === productId);
+            const itemIndex = cart.findIndex(item => item.id === productId);
+
+            if (itemIndex > -1) {
+                cart[itemIndex].qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            animateCartButton();
+        }
+
+        // تغيير الكمية
+        function updateQty(productId, change) {
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            if (itemIndex > -1) {
+                cart[itemIndex].qty += change;
+                if (cart[itemIndex].qty <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        // تحديث واجهة السلة
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            document.getElementById("nav-cart-count").innerText = totalCount;
+            document.getElementById("cart-total-price").innerText = `${totalPrice.toLocaleString()} د.ع`;
+
+            const cartContainer = document.getElementById("cart-items");
+            if (cart.length === 0) {
+                cartContainer.innerHTML = `<p style="text-align: center; color: #64748b;">السلة فارغة حالياً</p>`;
+                return;
+            }
+
+            cartContainer.innerHTML = cart.map(item => `
+                <div class="cart-item-row">
+                    <div>
+                        <div style="font-weight: bold;">${item.name}</div>
+                        <div style="font-size: 0.85em; color: #64748b;">${item.price.toLocaleString()} د.ع × ${item.qty}</div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+                        <span style="font-weight: bold;">${item.qty}</span>
+                        <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // إظهار / إخفاء نافذة السلة
+        function toggleCart() {
+            const modal = document.getElementById("cart-modal");
+            modal.classList.toggle("open");
+        }
+
+        // تأثير انيميشن لزر السلة عند الإضافة
+        function animateCartButton() {
+            const btn = document.getElementById("cart-nav-btn");
+            btn.classList.add("cart-pop-animation");
+            setTimeout(() => btn.classList.remove("cart-pop-animation"), 500);
+        }
+
+        // إرسال الطلب عبر الواتساب
+        function sendWhatsAppOrder() {
+            if (cart.length === 0) {
+                alert("السلة فارغة! قم بطلب بعض المنتجات أولاً.");
+                return;
+            }
+
+            const phone = "9647000000000"; // قم بوضع رقم الواتساب الخاص بالمتجر هنا
+            let message = "مرحباً Toop3D 👋، أود تأكيد الطلب التالي:\n\n";
+            
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name}\n   الكمية: ${item.qty} | السعر: ${(item.price * item.qty).toLocaleString()} د.ع\n`;
+            });
+
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            message += `\n💵 **المجموع الكلي:** ${totalPrice.toLocaleString()} د.ع\n\nيرجى تزويدي بتفاصيل التوصيل.`;
+
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
+        }
+
+        // التشغيل المبدئي
+        document.addEventListener("DOMContentLoaded", () => {
+            renderProducts();
+        });
+    </script>
 </body>
 </html>
