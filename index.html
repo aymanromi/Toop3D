@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=121">
+    <link rel="stylesheet" href="css/style.css?v=122">
     
     <style>
         /* ==========================================
@@ -206,7 +206,6 @@
             background-color: #1d4ed8 !important;
         }
 
-        /* تصميم وقفل الزر المعطل بالكامل */
         .add-to-cart-btn:disabled, .add-to-cart-btn.disabled {
             background-color: #94a3b8 !important;
             color: #ffffff !important;
@@ -287,7 +286,7 @@
         .modal-content {
             background-color: #ffffff !important;
             width: 100% !important;
-            max-width: 500px !important;
+            max-width: 520px !important;
             max-height: 85vh !important;
             border-radius: 16px !important;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1) !important;
@@ -331,12 +330,32 @@
             flex-grow: 1 !important;
         }
 
+        /* تصميم صف المنتج داخل السلة مع الصورة المصغرة */
         .cart-item-row {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            justify-content: space-between;
+            gap: 12px;
             padding: 12px 0;
             border-bottom: 1px solid #f1f5f9;
+        }
+
+        .cart-item-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-grow: 1;
+        }
+
+        .cart-item-thumb {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 2px;
+            flex-shrink: 0;
         }
 
         .qty-controls {
@@ -506,7 +525,7 @@
 </head>
 <body>
 
-    <!-- 1. البنر العلوي (مكبر وبارز بشكل أنيق) -->
+    <!-- 1. البنر العلوي -->
     <header class="top-brand-banner">
         <div class="banner-container">
             <div class="brand-left">
@@ -586,7 +605,7 @@
         🛒 السلة <span id="nav-cart-count">0</span>
     </button>
 
-    <!-- 🖼️ 6. النافذة المنبثقة للسلة -->
+    <!-- 🖼️ 6. النافذة المنبثقة للسلة (مع الصور المصغرة) -->
     <div id="cart-modal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -606,7 +625,7 @@
         </div>
     </div>
 
-    <!-- 🦶 7. الشريط السفلي المدمج (Compact Footer) -->
+    <!-- 🦶 7. الشريط السفلي المدمج -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
@@ -915,6 +934,7 @@
                     option: product.selectedOption,
                     typeText: opt.typeText,
                     price: opt.price,
+                    image: opt.image, /* حفظ صورة الخيار الحالي المصغرة */
                     qty: 1
                 });
             }
@@ -956,19 +976,24 @@
                 return;
             }
 
+            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=Image';
+
             cartBody.innerHTML = cart.map((item, index) => `
                 <div class="cart-item-row">
-                    <div>
-                        <strong style="display: block; font-size: 0.95em;">${item.name}</strong>
-                        <span style="font-size: 0.85em; color: #2563eb;">(${item.typeText})</span>
-                        <div class="qty-controls">
-                            <button type="button" class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
-                            <span style="font-weight: bold; font-size: 0.9em;">${item.qty}</span>
-                            <button type="button" class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
-                            <span style="font-size: 0.85em; color: #64748b; margin-right: 5px;">× ${item.price.toLocaleString()} د.ع</span>
+                    <div class="cart-item-info">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-thumb" onerror="this.src='${defaultUnavailableImg}'">
+                        <div>
+                            <strong style="display: block; font-size: 0.9em; color: #0f172a; line-height: 1.3;">${item.name}</strong>
+                            <span style="font-size: 0.8em; color: #2563eb; font-weight: 600;">(${item.typeText})</span>
+                            <div class="qty-controls">
+                                <button type="button" class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                                <span style="font-weight: bold; font-size: 0.9em;">${item.qty}</span>
+                                <button type="button" class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                                <span style="font-size: 0.8em; color: #64748b; margin-right: 5px;">× ${item.price.toLocaleString()} د.ع</span>
+                            </div>
                         </div>
                     </div>
-                    <button type="button" onclick="removeFromCart(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-weight: bold;">إزالة</button>
+                    <button type="button" onclick="removeFromCart(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-weight: bold; font-size: 0.85em; padding: 5px;">إزالة</button>
                 </div>
             `).join('');
         }
