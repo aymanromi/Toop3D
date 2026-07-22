@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=117">
+    <link rel="stylesheet" href="css/style.css?v=118">
     
     <style>
         /* ==========================================
-           1. البنر العلوي (تم تقليل الارتفاع)
+           1. البنر العلوي
            ========================================== */
         .top-brand-banner {
             background-color: #0f172a;
-            padding: 10px 20px !important; /* تقليل الارتفاع */
+            padding: 10px 20px !important;
             border-bottom: 1px solid #1e293b;
         }
 
@@ -33,14 +33,14 @@
         }
 
         .brand-logo {
-            height: 42px !important; /* تصغير حجم اللوجو قليلاً */
+            height: 42px !important;
             width: auto;
             object-fit: contain;
         }
 
         .company-name {
             color: #ffffff;
-            font-size: 1.05em !important; /* تصغير خط العنوان */
+            font-size: 1.05em !important;
             font-weight: bold;
             margin: 0;
             line-height: 1.2;
@@ -95,11 +95,11 @@
         }
 
         /* ==========================================
-           2. شريط التنقل العلوي (تم تقليل الارتفاع)
+           2. شريط التنقل العلوي
            ========================================== */
         .main-nav-bar {
             background-color: #0f172a !important;
-            padding: 8px 25px !important; /* تقليل الارتفاع */
+            padding: 8px 25px !important;
             display: flex !important;
             gap: 20px !important;
             align-items: center !important;
@@ -111,7 +111,7 @@
             color: #ffffff !important;
             text-decoration: none !important;
             font-weight: bold !important;
-            font-size: 0.95em !important; /* تصغير حجم الخط للتناسب */
+            font-size: 0.95em !important;
         }
         .main-nav-bar a.active {
             color: #38bdf8 !important;
@@ -396,14 +396,14 @@
         }
 
         /* ==========================================
-           6. 🦶 الشريط السفلي (Footer)
+           6. 🦶 الشريط السفلي الاحترافي (Compact Footer)
            ========================================== */
         .site-footer {
             background-color: #0f172a;
             color: #f8fafc;
-            padding: 40px 20px 20px 20px;
-            margin-top: 50px;
-            border-top: 3px solid #2563eb;
+            padding: 20px 20px 15px 20px !important; /* تقليل الارتفاع والحشوات */
+            margin-top: 40px;
+            border-top: 2px solid #2563eb;
             font-family: inherit;
         }
 
@@ -411,39 +411,42 @@
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
             box-sizing: border-box;
+            align-items: center;
         }
 
         .footer-col h3, .footer-col h4 {
             color: #ffffff;
-            margin-top: 0;
-            margin-bottom: 15px;
-            font-size: 1.2em;
+            margin: 0 0 8px 0;
+            font-size: 1.05em;
         }
 
         .footer-col p {
             color: #94a3b8;
-            font-size: 0.9em;
-            line-height: 1.6;
-            margin: 0 0 10px 0;
+            font-size: 0.85em;
+            line-height: 1.5;
+            margin: 0;
         }
 
         .footer-links {
             list-style: none;
             padding: 0;
             margin: 0;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
         }
 
         .footer-links li {
-            margin-bottom: 10px;
+            margin: 0;
         }
 
         .footer-links a {
             color: #cbd5e1;
             text-decoration: none;
-            font-size: 0.9em;
+            font-size: 0.85em;
             transition: color 0.2s ease;
         }
 
@@ -454,35 +457,32 @@
         .footer-contact-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             background-color: #25d366;
             color: #ffffff !important;
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 6px 12px;
+            border-radius: 6px;
             text-decoration: none;
             font-weight: bold;
-            font-size: 0.95em;
-            margin-top: 10px;
-            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+            font-size: 0.85em;
             transition: transform 0.2s ease, background-color 0.2s ease;
         }
 
         .footer-contact-btn:hover {
             background-color: #1ebc57;
-            transform: translateY(-2px);
         }
 
         .footer-bottom {
             max-width: 1200px;
-            margin: 30px auto 0 auto;
-            padding-top: 20px;
+            margin: 15px auto 0 auto;
+            padding-top: 10px;
             border-top: 1px solid #1e293b;
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            font-size: 0.85em;
+            gap: 10px;
+            font-size: 0.78em;
             color: #64748b;
         }
     </style>
@@ -589,28 +589,27 @@
         </div>
     </div>
 
-    <!-- 🦶 7. الشريط السفلي (Footer) -->
+    <!-- 🦶 7. الشريط السفلي المدمج (Compact Footer) -->
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-col">
                 <h3>Toop3D / NextShapes</h3>
-                <p>متجر متخصص في توفير حلول الطباعة ثلاثية الأبعاد، مستلزمات وسحب خيوط الفلامنت عالية الجودة (PLA, PETG, TPU, ABS) مع توفير خدمة التوصيل لجميع المحافظات.</p>
+                <p>متجر متخصص في توفير حلول ومستلزمات الطباعة ثلاثية الأبعاد وخيوط الفلامنت عالية الجودة.</p>
             </div>
 
             <div class="footer-col">
                 <h4>روابط سريعة</h4>
                 <ul class="footer-links">
                     <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#products">قائمة المنتجات</a></li>
-                    <li><a href="javascript:void(0)" onclick="toggleCart()">سلة التسوق</a></li>
+                    <li><a href="#products">المنتجات</a></li>
+                    <li><a href="javascript:void(0)" onclick="toggleCart()">السلة</a></li>
                 </ul>
             </div>
 
             <div class="footer-col">
-                <h4>تواصل معنا</h4>
-                <p>هل لديك استفسار أو طلب خاص؟ تواصل معنا مباشرة عبر الواتساب:</p>
-                <a href="https://wa.me/9647827573964" target="_blank" class="footer-contact-btn">
-                    💬 تواصل عبر الواتساب
+                <h4>الدعم الفني</h4>
+                <a href="https://wa.me/964727573964" target="_blank" class="footer-contact-btn">
+                    💬 راسلنا عبر الواتساب
                 </a>
             </div>
         </div>
@@ -695,7 +694,7 @@
             if (lines.length < 2) return [];
 
             const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().trim().replace(/^"|"$/g, ''));
-            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%AA+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
+            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%tt+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
 
             return lines.slice(1).map((line, idx) => {
                 if (!line.trim()) return null;
@@ -770,7 +769,7 @@
                 return;
             }
 
-            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%AA+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
+            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%tt+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
 
             filtered.forEach(product => {
                 const currentOpt = product.options[product.selectedOption];
