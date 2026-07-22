@@ -4,12 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=119">
+    <link rel="stylesheet" href="css/style.css?v=120">
     
     <style>
         /* ==========================================
-           1. شريط التنقل العلوي (التنسيق الأصلي)
+           1. شريط التنقل العلوي والبنر (التنسيق الأصلي الكامل)
            ========================================== */
+        .top-brand-banner {
+            background-color: #0f172a;
+            padding: 20px !important;
+            border-bottom: 2px solid #1e293b;
+        }
+
+        .banner-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .brand-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .brand-logo {
+            height: 60px !important;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .company-name {
+            color: #ffffff;
+            font-size: 1.3em !important;
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .company-sub {
+            color: #94a3b8;
+            font-size: 0.85em !important;
+            margin: 0;
+        }
+
+        .banner-divider {
+            width: 1px;
+            height: 45px;
+            background-color: #334155;
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .banner-divider { display: block; }
+        }
+
+        .brand-right {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            align-items: flex-end;
+        }
+
+        .badges-row, .main-products-row {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .badge-icon {
+            background-color: #1e293b;
+            color: #38bdf8;
+            font-size: 0.8em !important;
+            padding: 4px 8px !important;
+            border-radius: 6px;
+            font-weight: bold;
+            border: 1px solid #334155;
+        }
+
+        .product-tag {
+            color: #cbd5e1;
+            font-size: 0.8em !important;
+            background-color: rgba(255, 255, 255, 0.08);
+            padding: 4px 8px !important;
+            border-radius: 6px;
+        }
+
         .main-nav-bar {
             background-color: #0f172a !important;
             padding: 15px 25px !important;
@@ -18,6 +101,7 @@
             align-items: center !important;
             width: 100% !important;
             box-sizing: border-box !important;
+            border-bottom: 2px solid #2563eb;
         }
         .main-nav-bar a {
             color: #ffffff !important;
@@ -404,7 +488,7 @@
 </head>
 <body>
 
-    <!-- 1. البنر العلوي -->
+    <!-- 1. البنر العلوي بالشكل الأصلي الكامل -->
     <header class="top-brand-banner">
         <div class="banner-container">
             <div class="brand-left">
@@ -609,7 +693,7 @@
             if (lines.length < 2) return [];
 
             const headers = parseCSVLine(lines[0]).map(h => h.toLowerCase().trim().replace(/^"|"$/g, ''));
-            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%AA+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
+            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%tt+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
 
             return lines.slice(1).map((line, idx) => {
                 if (!line.trim()) return null;
@@ -684,7 +768,7 @@
                 return;
             }
 
-            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%AA+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
+            const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D9%86%D9%81%D8%AF%D8%tt+%D8%A7%D9%84%D9%83%D9%85%D9%8A%D8%A9';
 
             filtered.forEach(product => {
                 const currentOpt = product.options[product.selectedOption];
