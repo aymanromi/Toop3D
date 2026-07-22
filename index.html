@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=115">
+    <link rel="stylesheet" href="css/style.css?v=116">
     
     <style>
         /* ==========================================
@@ -233,8 +233,34 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 0;
+            padding: 12px 0;
             border-bottom: 1px solid #f1f5f9;
+        }
+
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 5px;
+        }
+
+        .qty-btn {
+            background-color: #e2e8f0;
+            border: none;
+            color: #0f172a;
+            width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.2s;
+        }
+
+        .qty-btn:hover {
+            background-color: #cbd5e1;
         }
 
         .modal-footer {
@@ -281,6 +307,97 @@
             text-align: center;
             padding: 40px;
             font-size: 1.2em;
+            color: #64748b;
+        }
+
+        /* ==========================================
+           5. 🦶 الشريط السفلي (Footer)
+           ========================================== */
+        .site-footer {
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 40px 20px 20px 20px;
+            margin-top: 50px;
+            border-top: 3px solid #2563eb;
+            font-family: inherit;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            box-sizing: border-box;
+        }
+
+        .footer-col h3, .footer-col h4 {
+            color: #ffffff;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .footer-col p {
+            color: #94a3b8;
+            font-size: 0.9em;
+            line-height: 1.6;
+            margin: 0 0 10px 0;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.2s ease;
+        }
+
+        .footer-links a:hover {
+            color: #38bdf8;
+        }
+
+        .footer-contact-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #25d366;
+            color: #ffffff !important;
+            padding: 10px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.95em;
+            margin-top: 10px;
+            box-shadow: 0 4px 10px rgba(37, 211, 102, 0.2);
+            transition: transform 0.2s ease, background-color 0.2s ease;
+        }
+
+        .footer-contact-btn:hover {
+            background-color: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0 auto;
+            padding-top: 20px;
+            border-top: 1px solid #1e293b;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            font-size: 0.85em;
             color: #64748b;
         }
     </style>
@@ -387,8 +504,40 @@
         </div>
     </div>
 
+    <!-- 🦶 7. الشريط السفلي (Footer) -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>Toop3D / NextShapes</h3>
+                <p>متجر متخصص في توفير حلول الطباعة ثلاثية الأبعاد، مستلزمات وسحب خيوط الفلامنت عالية الجودة (PLA, PETG, TPU, ABS) مع توفير خدمة التوصيل لجميع المحافظات.</p>
+            </div>
+
+            <div class="footer-col">
+                <h4>روابط سريعة</h4>
+                <ul class="footer-links">
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#products">قائمة المنتجات</a></li>
+                    <li><a href="javascript:void(0)" onclick="toggleCart()">سلة التسوق</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-col">
+                <h4>تواصل معنا</h4>
+                <p>هل لديك استفسار أو طلب خاص؟ تواصل معنا مباشرة عبر الواتساب:</p>
+                <a href="https://wa.me/964727573964" target="_blank" class="footer-contact-btn">
+                    💬 تواصل عبر الواتساب
+                </a>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div>© 2026 Toop3D Co. جميع الحقوق محفوظة.</div>
+            <div>تطوير وإدارة متجر Toop3D الرقمي</div>
+        </div>
+    </footer>
+
     <!-- ==========================================
-       7. البرمجة ومزامنة Google Sheets
+       8. البرمجة ومزامنة Google Sheets
        ========================================== -->
     <script>
         const SHEET_ID = '2PACX-1vQswuYaNx5xNjan745b2Dca59YUIojFeP8DWKut0jADKMLl4uPnOOHbVQsBx55m0FmhwEpobJlIEaap';
@@ -492,7 +641,6 @@
                 const hasSpool = isSpoolAvailable && spoolPrice > 0;
                 const hasRefill = isRefillAvailable && refillPrice > 0;
 
-                // ⚡ تحديد الخيار الافتراضي: إذا توفرت البكرة اختر spool، وإذا لم تتوفر وتوفر الـ refill تحول تلقائياً لـ refill
                 let defaultOption = 'spool';
                 if (!hasSpool && hasRefill) {
                     defaultOption = 'refill';
@@ -679,6 +827,16 @@
             }
         }
 
+        function changeQty(index, delta) {
+            if (cart[index]) {
+                cart[index].qty += delta;
+                if (cart[index].qty <= 0) {
+                    cart.splice(index, 1);
+                }
+                updateCartUI();
+            }
+        }
+
         function updateCartUI() {
             const countSpan = document.getElementById('nav-cart-count');
             const totalSpan = document.getElementById('cart-total-price');
@@ -702,7 +860,12 @@
                     <div>
                         <strong style="display: block; font-size: 0.95em;">${item.name}</strong>
                         <span style="font-size: 0.85em; color: #2563eb;">(${item.typeText})</span>
-                        <div style="font-size: 0.85em; color: #64748b;">${item.price.toLocaleString()} د.ع × ${item.qty}</div>
+                        <div class="qty-controls">
+                            <button type="button" class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span style="font-weight: bold; font-size: 0.9em;">${item.qty}</span>
+                            <button type="button" class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                            <span style="font-size: 0.85em; color: #64748b; margin-right: 5px;">× ${item.price.toLocaleString()} د.ع</span>
+                        </div>
                     </div>
                     <button type="button" onclick="removeFromCart(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-weight: bold;">إزالة</button>
                 </div>
@@ -740,7 +903,7 @@
 
             message += `\nالمجموع الكلي: ${total.toLocaleString()} د.ع`;
 
-            const phone = "9647827573964"; 
+            const phone = "964727573964"; 
             window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
         }
 
