@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=111">
+    <link rel="stylesheet" href="css/style.css?v=113">
     
     <style>
         /* ==========================================
@@ -104,12 +104,13 @@
             background-color: #1d4ed8 !important;
         }
 
-        /* تصميم الزر المعطل */
-        .add-to-cart-btn:disabled {
+        /* تصميم وقفل الزر المعطل بالكامل */
+        .add-to-cart-btn:disabled, .add-to-cart-btn.disabled {
             background-color: #94a3b8 !important;
             color: #ffffff !important;
             cursor: not-allowed !important;
-            opacity: 0.8;
+            pointer-events: none !important;
+            opacity: 0.7 !important;
         }
 
         /* ==========================================
@@ -387,7 +388,7 @@
     </div>
 
     <!-- ==========================================
-       7. البرمجة ومزامنة Google Sheets
+       7. البرمجة ومزامنة Google Sheets (المحدثة)
        ========================================== -->
     <script>
         const SHEET_ID = '2PACX-1vQswuYaNx5xNjan745b2Dca59YUIojFeP8DWKut0jADKMLl4uPnOOHbVQsBx55m0FmhwEpobJlIEaap';
@@ -441,7 +442,6 @@
             if (lines.length < 2) return [];
 
             const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, '').toLowerCase());
-
             const defaultUnavailableImg = 'https://via.placeholder.com/300x300/f1f5f9/64748b?text=%D8%B3%D9%8A%D8%AA%D9%88%D9%81%D8%B1+%D9%82%D8%B1%D9%8A%D8%A8%D8%A7%D9%8B';
 
             return lines.slice(1).map((line, idx) => {
@@ -452,39 +452,47 @@
                     row[header] = values[index] || '';
                 });
 
-                const name = row['name'] || row['اسم المنتج'] || row['title'] || row['product'] || row['المنتج'] || row['اسم'] || row[headers[0]] || `منتج ${idx + 1}`;
+                // 1. القراءة الصحيحة لـ material و color ورسم اسم المنتج
+                const material = (row['material'] || 'PETG').toUpperCase();
+                const color = row['color'] || '';
+                const name = `خيوط ${material} High Speed (${color})`;
                 const id = row['id'] || `product-${idx}`;
-                const category = (row['category'] || row['material'] || row['الخامة'] || 'PETG').toUpperCase();
-                
-                const spoolPrice = parseFloat(row['spool_price'] || row['price'] || row['السعر'] || 0);
-                const refillPrice = parseFloat(row['refill_price'] || 0);
 
-                let spoolImg = row['spool_image'] || row['image'] || row['الصورة'] || '';
+                // الاعتماد على خامة المنتج للفلترة
+                const filterCategory = material; 
+
+                // 2. فحص توفر البكرة (spool_avail)
+                const spoolAvailRaw = (row['spool_avail'] || 'true').toString().toLowerCase().trim();
+                const isSpoolAvailable = (spoolAvailRaw === 'true' || spoolAvailRaw === '1');
+
+                // 3. فحص توفر بدون بكرة (refill_avail)
+                const refillAvailRaw = (row['refill_avail'] || 'true').toString().toLowerCase().trim();
+                const isRefillAvailable = (refillAvailRaw === 'true' || refillAvailRaw === '1');
+
+                // الأسعار والصور
+                const spoolPrice = parseFloat((row['spool_price'] || '0').replace(/[^0-9.]/g, '')) || 0;
+                const refillPrice = parseFloat((row['refill_price'] || '0').replace(/[^0-9.]/g, '')) || 0;
+
+                let spoolImg = row['spool_image'] || defaultUnavailableImg;
                 let refillImg = row['refill_image'] || spoolImg;
-
-                if (!spoolImg) spoolImg = defaultUnavailableImg;
-                if (!refillImg) refillImg = defaultUnavailableImg;
-
-                // التحقق المباشر من خانة available
-                const availVal = (row['available'] || 'true').toString().toLowerCase().trim();
-                const isAvailable = !(availVal === 'false' || availVal === 'no' || availVal === '0');
 
                 return {
                     id: id,
                     name: name,
-                    category: category,
-                    isAvailable: isAvailable,
-                    selectedOption: 'spool',
+                    category: filterCategory,
+                    selectedOption: 'spool', // الخيار الافتراضي عند الفتح
                     options: {
                         spool: {
                             typeText: 'مع بكرة',
                             price: spoolPrice,
-                            image: spoolImg
+                            image: spoolImg,
+                            isAvailable: isSpoolAvailable && spoolPrice > 0
                         },
                         refill: {
                             typeText: 'بدون بكرة (Refill)',
                             price: refillPrice,
-                            image: refillImg
+                            image: refillImg,
+                            isAvailable: isRefillAvailable && refillPrice > 0
                         }
                     }
                 };
@@ -511,7 +519,9 @@
 
             filtered.forEach(product => {
                 const currentOpt = product.options[product.selectedOption];
-                const canAddToCart = product.isAvailable && currentOpt.price > 0;
+                
+                // فحص توفر الخيار المختار حالياً
+                const canAddToCart = currentOpt.isAvailable;
 
                 const card = document.createElement('div');
                 card.className = 'product-card';
@@ -520,28 +530,28 @@
                 const actionButtonHtml = `
                     <button type="button" 
                             id="add-btn-${product.id}" 
-                            class="add-to-cart-btn" 
+                            class="add-to-cart-btn ${!canAddToCart ? 'disabled' : ''}" 
                             ${!canAddToCart ? 'disabled' : ''} 
                             onclick="addToCart('${product.id}')">
                         ${canAddToCart ? '🛒 إضافة إلى السلة' : '⏳ غير متوفر حالياً'}
                     </button>
                 `;
 
-                const priceHtml = currentOpt.price > 0 
+                const priceHtml = canAddToCart
                     ? `<span id="price-${product.id}">${currentOpt.price.toLocaleString()}</span> د.ع`
                     : `غير متوفر حالياً`;
 
                 card.innerHTML = `
                     <div style="position: relative;">
                         <img id="img-${product.id}" src="${currentOpt.image}" alt="${product.name}" onerror="this.src='${defaultUnavailableImg}'">
-                        ${!product.isAvailable ? '<span style="position: absolute; top: 10px; right: 10px; background: #ef4444; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold;">نفدت الكمية</span>' : ''}
+                        <span id="badge-${product.id}" style="position: absolute; top: 10px; right: 10px; background: #ef4444; color: #fff; padding: 3px 8px; border-radius: 4px; font-size: 0.75em; font-weight: bold; display: ${!canAddToCart ? 'block' : 'none'};">نفدت الكمية</span>
                     </div>
 
                     <h3 style="font-size: 1.05em; margin: 8px 0; color: #0f172a; min-height: 2.4em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                         ${product.name}
                     </h3>
                     
-                    <div style="font-size: 1.1em; font-weight: bold; color: ${currentOpt.price > 0 && product.isAvailable ? '#16a34a' : '#64748b'}; margin-bottom: 8px;">
+                    <div id="price-container-${product.id}" style="font-size: 1.1em; font-weight: bold; color: ${canAddToCart ? '#16a34a' : '#64748b'}; margin-bottom: 8px;">
                         ${priceHtml}
                     </div>
 
@@ -570,13 +580,14 @@
             const opt = product.options[optionType];
             
             const imgElem = document.getElementById(`img-${productId}`);
-            const priceElem = document.getElementById(`price-${productId}`);
+            const priceContainer = document.getElementById(`price-container-${productId}`);
             const addBtn = document.getElementById(`add-btn-${productId}`);
+            const badge = document.getElementById(`badge-${productId}`);
 
+            // 1. تحديث الصورة
             if (imgElem) imgElem.src = opt.image;
-            if (priceElem) priceElem.innerText = opt.price > 0 ? opt.price.toLocaleString() : 'غير متوفر حالياً';
-            
-            // تحديث الأزرار المحددة
+
+            // 2. تحديث ألوان وأزرار الاختيار
             const spoolBtn = document.getElementById(`btn-spool-${productId}`);
             const refillBtn = document.getElementById(`btn-refill-${productId}`);
             
@@ -590,11 +601,29 @@
                 }
             }
 
-            // تحديث تعطيل/تفعيل زر الإضافة للسلة بناءً على توفر المنتج وسعر الخيار
-            const canAddToCart = product.isAvailable && opt.price > 0;
+            // 3. إعادة تقييم توفر الخيار الجديد فوراً
+            const canAddToCart = opt.isAvailable;
+
+            if (priceContainer) {
+                priceContainer.style.color = canAddToCart ? '#16a34a' : '#64748b';
+                priceContainer.innerHTML = canAddToCart 
+                    ? `<span id="price-${productId}">${opt.price.toLocaleString()}</span> د.ع` 
+                    : 'غير متوفر حالياً';
+            }
+
+            if (badge) {
+                badge.style.display = !canAddToCart ? 'block' : 'none';
+            }
+
             if (addBtn) {
                 addBtn.disabled = !canAddToCart;
-                addBtn.innerHTML = canAddToCart ? '🛒 إضافة إلى السلة' : '⏳ غير متوفر حالياً';
+                if (canAddToCart) {
+                    addBtn.classList.remove('disabled');
+                    addBtn.innerHTML = '🛒 إضافة إلى السلة';
+                } else {
+                    addBtn.classList.add('disabled');
+                    addBtn.innerHTML = '⏳ غير متوفر حالياً';
+                }
             }
         }
 
@@ -604,8 +633,11 @@
             
             const opt = product.options[product.selectedOption];
 
-            // منع الإضافة كحماية إضافية
-            if (!product.isAvailable || opt.price <= 0) return;
+            // ⛔ حماية برمجية صارمة: رفض الإضافة إذا كان الخيار غير متوفر
+            if (!opt.isAvailable) {
+                alert('عذراً، هذا الخيار غير متوفر حالياً ولن يتم إضافته للسلة.');
+                return;
+            }
 
             const itemInCart = cart.find(item => item.id === productId && item.option === product.selectedOption);
 
