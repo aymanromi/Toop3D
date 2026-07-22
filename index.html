@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=125">
+    <link rel="stylesheet" href="css/style.css?v=126">
     
     <style>
         /* ==========================================
@@ -394,14 +394,6 @@
             gap: 12px !important;
         }
 
-        .total-price-box {
-            display: flex !important;
-            justify-content: space-between !important;
-            font-size: 1.2em !important;
-            font-weight: bold !important;
-            color: #0f172a !important;
-        }
-
         .whatsapp-btn {
             background-color: #25d366 !important;
             color: #ffffff !important;
@@ -615,10 +607,6 @@
             </div>
             <div id="cart-items" class="cart-body"></div>
             <div class="modal-footer">
-                <div class="total-price-box">
-                    <span>المجموع الكلي:</span>
-                    <span id="cart-total-price">0 د.ع</span>
-                </div>
                 <button id="checkout-whatsapp-btn" type="button" onclick="sendWhatsAppOrder()" class="whatsapp-btn">
                     💬 إتمام الطلب عبر الواتساب
                 </button>
@@ -916,7 +904,6 @@
         function updateCartUI() {
             const cartCountEl = document.getElementById('nav-cart-count');
             const cartItemsContainer = document.getElementById('cart-items');
-            const cartTotalPriceEl = document.getElementById('cart-total-price');
 
             const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
             if (cartCountEl) cartCountEl.innerText = totalCount;
@@ -930,17 +917,12 @@
                         <p style="font-size: 1.1em; margin: 0;">سلة التسوق فارغة حالياً</p>
                     </div>
                 `;
-                if (cartTotalPriceEl) cartTotalPriceEl.innerText = '0 د.ع';
                 return;
             }
 
             let html = '';
-            let totalPrice = 0;
 
             cart.forEach(item => {
-                const itemTotal = item.price * item.quantity;
-                totalPrice += itemTotal;
-
                 html += `
                     <div class="cart-item-row">
                         <div class="cart-item-info">
@@ -948,7 +930,6 @@
                             <div>
                                 <h4 style="margin: 0 0 4px 0; font-size: 1em; color: #0f172a;">${item.name}</h4>
                                 <span style="font-size: 0.85em; color: #2563eb; background: #eff6ff; padding: 2px 8px; border-radius: 4px; font-weight: bold;">${item.typeName}</span>
-                                <div style="font-size: 0.9em; color: #64748b; margin-top: 4px;">${item.price.toLocaleString()} د.ع للمنتج الواحد</div>
                                 <div class="qty-controls">
                                     <button type="button" class="qty-btn" onclick="updateQuantity('${item.cartItemId}', -1)">-</button>
                                     <span style="font-weight: bold; min-width: 20px; text-align: center;">${item.quantity}</span>
@@ -957,7 +938,6 @@
                             </div>
                         </div>
                         <div style="text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
-                            <span style="font-weight: bold; color: #0f172a; font-size: 1.05em;">${itemTotal.toLocaleString()} د.ع</span>
                             <button type="button" onclick="removeFromCart('${item.cartItemId}')" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 0.85em; font-weight: bold;">حذف</button>
                         </div>
                     </div>
@@ -965,7 +945,6 @@
             });
 
             cartItemsContainer.innerHTML = html;
-            if (cartTotalPriceEl) cartTotalPriceEl.innerText = `${totalPrice.toLocaleString()} د.ع`;
         }
 
         function updateQuantity(cartItemId, change) {
@@ -982,6 +961,7 @@
 
         function removeFromCart(cartItemId) {
             cart = cart.filter(i => i.cartItemId !== cartItemId);
+            updateCardUI(); // تم تصحيح النداء هنا لـ updateCartUI
             updateCartUI();
         }
 
@@ -1007,18 +987,11 @@
             }
 
             let message = 'مرحباً، أود طلب المنتجات التالية من متجر Toop3D:\n\n';
-            let totalPrice = 0;
 
             cart.forEach((item, index) => {
-                const itemTotal = item.price * item.quantity;
-                totalPrice += itemTotal;
                 message += `${index + 1}. ${item.name} (${item.typeName})\n`;
-                message += `   - الكمية: ${item.quantity}\n`;
-                message += `   - السعر: ${itemTotal.toLocaleString()} د.ع\n\n`;
+                message += `   - الكمية: ${item.quantity}\n\n`;
             });
-
-            message += `-------------------\n`;
-            message += `المجموع الكلي: ${totalPrice.toLocaleString()} د.ع`;
 
             const phone = '9647827573964';
             const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
