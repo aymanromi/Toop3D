@@ -478,119 +478,51 @@ button[type="submit"]:active,
 }
 
 /* ==========================================
-   تنسيق نافذة السلة المنبثقة (Drawer)
+   تنسيق الزر العائم للسلة (مستطيل بحواف دائرية)
    ========================================== */
-.cart-modal-overlay {
+.floating-cart-btn {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-}
-
-.cart-drawer {
-    position: fixed;
-    top: 0;
-    left: -400px; /* مخفية خارج الشاشة جهة اليسار (أو اليمين حسب لغة المتجر) */
-    width: 380px;
-    max-width: 90%;
-    height: 100%;
-    background-color: #ffffff;
-    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
-    z-index: 1001;
-    display: flex;
-    flex-direction: column;
-    transition: left 0.3s ease-in-out;
-}
-
-/* حالة ظهور النافذة */
-body.cart-open .cart-drawer {
-    left: 0;
-}
-
-body.cart-open .cart-modal-overlay {
-    opacity: 1;
-    visibility: visible;
-}
-
-/* رأس النافذة المنبثقة */
-.cart-drawer-header {
-    padding: 20px;
-    border-bottom: 1px solid #e2e8f0;
+    bottom: 25px;
+    left: 25px; /* يمكن تغييره إلى right: 25px لليمين */
+    background-color: #2563eb; /* لون الخلفية */
+    color: #ffffff; /* لون الأيقونة والخط */
+    
+    /* تغييرات الشكل والأبعاد */
+    width: auto; /* العرض يتناسب تلقائياً مع المحتوى */
+    height: 55px; /* ارتفاع ثابت */
+    padding: 0 20px; /* مسافات داخلية يمنة ويسرة */
+    border-radius: 30px; /* حواف دائرية كاملة من الجانبين */
+    
     display: flex;
     align-items: center;
-    justify-content: space-between;
-}
-
-.cart-drawer-header h3 {
-    margin: 0;
-    color: #1e293b;
-    font-size: 1.25rem;
-}
-
-.close-cart-btn {
-    background: none;
-    border: none;
-    font-size: 1.8rem;
-    cursor: pointer;
-    color: #64748b;
-    padding: 0;
-    line-height: 1;
-}
-
-.close-cart-btn:hover {
-    color: #0f172a;
-}
-
-/* محتوى السلة الداخلي */
-.cart-drawer-body {
-    padding: 20px;
-    flex: 1;
-    overflow-y: auto;
-}
-
-.empty-cart-text {
-    text-align: center;
-    color: #94a3b8;
-    margin-top: 40px;
-}
-
-/* تذييل النافذة (الإجمالي وزر واتساب) */
-.cart-drawer-footer {
-    padding: 20px;
-    border-top: 1px solid #e2e8f0;
-    background-color: #f8fafc;
-}
-
-.cart-total {
-    display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    
+    /* إضافة نص بجانب الأيقونة */
     font-size: 1.1rem;
-    font-weight: bold;
-    color: #1e293b;
-    margin-bottom: 15px;
-}
-
-.checkout-whatsapp-btn {
-    width: 100%;
-    background-color: #25d366;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 1rem;
+    font-weight: 600;
+    gap: 10px; /* مسافة بين الأيقونة والنص */
+    
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.4);
     cursor: pointer;
-    transition: background-color 0.2s ease;
-    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+    z-index: 999;
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-.checkout-whatsapp-btn:hover {
-    background-color: #22c55e;
+.floating-cart-btn:hover {
+    background-color: #1d4ed8;
+    transform: translateY(-3px); /* رفعه قليلاً عند التحويم */
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+}
+
+/* عداد المنتجات المصغر فوق الزر (تم تعديل مكانه ليتناسب مع المستطيل) */
+#cart-counter {
+    /* إزالة التموضع المطلق وجعله جزءاً من الـ Flexbox */
+    position: static; 
+    background-color: #ef4444;
+    color: white;
+    font-size: 0.8rem;
+    font-weight: bold;
+    padding: 2px 7px;
+    border-radius: 50%;
+    margin-left: -5px; /* لتقريبه قليلاً من النص */
 }
