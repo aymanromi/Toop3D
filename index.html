@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Toop3D - متجر الطباعة ثلاثية الأبعاد</title>
-    <link rel="stylesheet" href="css/style.css?v=126">
+    <link rel="stylesheet" href="css/style.css?v=127">
 </head>
 <body>
 
@@ -381,7 +381,8 @@
         function filterCategory(category) {
             renderProducts(category);
         }
-function addToCart(productId) {
+
+        function addToCart(productId) {
             const product = productsData.find(p => p.id === productId);
             if (!product) return;
 
@@ -404,12 +405,6 @@ function addToCart(productId) {
             }
 
             updateCartUI();
-            // تم إزالة toggleCartModal() من هنا لكي لا تفتح السلة تلقائياً
-        }
-
-
-
-        
         }
 
         // دالة تحديث واجهة السلة بالكامل
