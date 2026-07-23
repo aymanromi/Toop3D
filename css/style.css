@@ -17,7 +17,6 @@ body {
 /* ==========================================
    2. البنر العلوي الاحترافي (Toop3D Top Banner)
    ========================================== */
-
 .top-brand-banner {
     background: linear-gradient(135deg, #090d16 0%, #0f172a 100%);
     padding: 24px 20px;
@@ -35,8 +34,6 @@ body {
     gap: 30px;
     flex-wrap: wrap;
 }
-
-/* القسم الأيسر */
 
 .brand-left {
     display: flex;
@@ -72,15 +69,11 @@ body {
     margin: 0;
 }
 
-/* الفاصل */
-
 .banner-divider {
     width: 2px;
     height: 60px;
     background: linear-gradient(to bottom, transparent, #475569, transparent);
 }
-
-/* القسم الأيمن */
 
 .brand-right {
     display: flex;
@@ -96,8 +89,6 @@ body {
     flex-wrap: wrap;
 }
 
-/* شارات الجودة */
-
 .badge-icon {
     background: #1e293b;
     color: #38bdf8;
@@ -108,8 +99,6 @@ body {
     font-weight: bold;
 }
 
-/* أسماء المنتجات */
-
 .product-tag {
     background: rgba(255,255,255,.08);
     color: #e2e8f0;
@@ -118,93 +107,6 @@ body {
     padding: 6px 10px;
     font-size: .82rem;
     font-weight: 600;
-}
-
-/* الجوال */
-
-@media (max-width:768px){
-
-    .banner-container{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .brand-left{
-        flex-direction:column;
-    }
-
-    .brand-right{
-        align-items:center;
-    }
-
-    .banner-divider{
-        display:none;
-    }
-
-    .brand-logo{
-        height:60px;
-    }
-
-    .company-name{
-        font-size:1.4rem;
-    }
-
-.company-sub {
-    font-size: 0.78em;
-    color: #64748b;
-    margin: 2px 0 0 0;
-    font-weight: 600;
-}
-
-/* فاصل عمودي */
-.banner-divider {
-    width: 1px;
-    height: 42px;
-    background-color: #cbd5e1;
-}
-
-/* القسم الأيمن */
-.brand-right {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-}
-
-/* شارات الجودة */
-.badges-row {
-    display: flex;
-    gap: 6px;
-}
-
-.badge-icon {
-    border: 1px solid #0f172a;
-    border-radius: 50%;
-    width: 26px;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.58em;
-    font-weight: bold;
-    color: #0f172a;
-    background-color: #f8fafc;
-}
-
-/* كبسولات المنتجات الأزرق */
-.main-products-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 5px;
-}
-
-.product-tag {
-    background-color: #2563eb;
-    color: #ffffff;
-    font-size: 0.7em;
-    font-weight: 600;
-    padding: 3px 10px;
-    border-radius: 12px;
 }
 
 /* ==========================================
@@ -238,10 +140,6 @@ body {
     color: #38bdf8;
 }
 
-.nav-divider {
-    color: #475569;
-}
-
 .sub-cat-btn {
     background: none;
     border: none;
@@ -266,57 +164,37 @@ body {
 }
 
 /* ==========================================
-   4. قسم الهيرو (Hero Section)
+   4. شبكة المنتجات والصور (Products Grid & Cards)
    ========================================== */
-.hero-section {
-    background-color: #1e293b;
-    color: #ffffff;
-    padding: 50px 20px;
-    text-align: right;
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 20px;
+    padding: 20px;
 }
 
-.hero-content {
-    max-width: 1200px;
-    margin: 0 auto;
+.product-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
 }
 
-.hero-title {
-    font-size: 2.2em;
-    font-weight: 800;
-    margin-bottom: 15px;
-}
-
-.hero-title span {
-    color: #10b981;
-}
-
-.hero-features {
-    list-style: none;
-    margin-bottom: 25px;
-}
-
-.hero-features li {
-    font-size: 1.05em;
-    margin-bottom: 8px;
-}
-
-.btn-primary {
-    display: inline-block;
-    background-color: #2563eb;
-    color: #ffffff;
-    padding: 10px 24px;
-    border-radius: 30px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.2s;
-}
-
-.btn-primary:hover {
-    background-color: #1d4ed8;
+/* تم ضبط مقاسات الصورة حصرياً هنا لمنع تكبرها */
+.product-card img {
+    width: 130px !important;
+    height: 130px !important;
+    max-width: 100%;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 12px auto;
+    background: #f8fafc;
+    border-radius: 8px;
 }
 
 /* ==========================================
-   5. التجاوب مع شاشات الجوال
+   5. التجاوب مع شاشات الجوال (Media Queries)
    ========================================== */
 @media (max-width: 768px) {
     .banner-container {
@@ -333,29 +211,7 @@ body {
     .brand-right {
         align-items: center;
     }
-}
-/* ===== تصغير صور المنتجات ===== */
-
-.products-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 20px;
-}
-
-.product-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 15px;
-    text-align: center;
-}
-
-.product-card img {
-    width: 140px;       /* عرض ثابت وصغير نسبياً */
-    height: 140px;      /* ارتفاع ثابت ليصبح شكلها مربع ومتناسق */
-    object-fit: contain; /* يحافظ على نسبة أبعاد الصورة بدون قصها */
-    display: block;
-    margin: 0 auto 12px auto; /* تمركز الصورة في المنتصف مع مسافة من الأسفل */
-    background: #f8fafc;
-    border-radius: 8px;
+    .company-name {
+        font-size: 1.4rem;
+    }
 }
