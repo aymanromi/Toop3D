@@ -527,5 +527,19 @@
             loadProductsFromSheet();
         });
     </script>
+
+    <script>
+    // JavaScript للتحكم بتبديل الصور تلقائياً
+    let slides = document.querySelectorAll('.hero-gallery-container .slide');
+    let currentSlide = 0;
+    let slideInterval = setInterval(nextSlide, 5000); // التبديل كل 5 ثواني
+
+    function nextSlide() {
+        slides[currentSlide].className = 'slide';
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].className = 'slide active';
+    }
+</script>
+    
 </body>
 </html>
