@@ -5,7 +5,7 @@ function toggleCartModal() {
     document.body.classList.toggle('cart-open');
 }
 
-// دالة تحديث واجهة السلة
+// دالة تحديث واجهة السلة والعداد والإجمالي
 function updateCartUI() {
     const cartCounter = document.getElementById('cart-counter');
     const container = document.getElementById('cartItemsContainer');
@@ -26,34 +26,10 @@ function updateCartUI() {
             </div>
         `;
         if (totalPriceEl) totalPriceEl.innerText = '0 د.ع';
-        return; // الخروج هنا صحيح لأن السلة فارغة ولا توجد منتجات لعرضها
-    }
-    
-    // إذا كانت السلة تحتوي على منتجات، سيتم إكمال التنفيذ هنا ولن يتم الخروج المبكر
-    let html = '';
-    let totalPrice = 0;
-    
-    cart.forEach((item, index) => {
-        let itemTotal = item.price * item.quantity;
-        totalPrice += itemTotal;
-        
-        html += `
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid #f1f5f9;">
-                <div>
-                    <h4 style="margin: 0 0 5px 0; font-size: 0.95rem; color: #1e293b;">${item.name}</h4>
-                    <span style="font-size: 0.85rem; color: #64748b;">${item.price.toLocaleString()} د.ع × ${item.quantity}</span>
-                </div>
-                <button onclick="removeFromCart(${index})" style="background: none; border: none; color: #ef4444; cursor: pointer; font-size: 1.1rem;" title="حذف">🗑️</button>
-            </div>
-        `;
-    });
-    
-    container.innerHTML = html;
-    if (totalPriceEl) totalPriceEl.innerText = `${totalPrice.toLocaleString()} د.ع`;
-}
         return;
     }
     
+    // إذا كانت السلة تحتوي على منتجات
     let itemsHTML = '';
     let totalPrice = 0;
     
@@ -89,7 +65,7 @@ function checkoutWhatsApp() {
         return;
     }
     
-    const phoneNumber = "9647700000000"; // استبدل هذا برقم هاتفك الحقيقي
+    const phoneNumber = "9647700000000"; // استبدل هذا برقم هاتفك الحقيقي مع رمز الدولة
     let message = "مرحباً، أريد طلب المنتجات التالية:\n\n";
     
     let totalPrice = 0;
@@ -105,7 +81,7 @@ function checkoutWhatsApp() {
     window.open(`https://wa.me/${phoneNumber}?text=${encodedMessage}`, '_blank');
 }
 
-// التقاط ضغطة أزرار "إضافة إلى السلة" في المتجر
+// التقاط ضغطة أزرار "إضافة إلى السلة" في المتجر تلقائياً
 document.addEventListener('click', function(e) {
     const btn = e.target.closest('.add-to-cart-btn') || (e.target.matches('.add-to-cart-btn') ? e.target : null);
     
