@@ -366,3 +366,74 @@ body {
         height: 350px !important;
     }
 }
+/* ==========================================
+   تنسيق أزرار خيارات المنتج (مع بكرة / بدون بكرة)
+   ========================================== */
+.product-options, .spool-options {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+/* تصميم أزرار الاختيار (راديو / أزرار تبديل) */
+.product-options button, 
+.product-options label,
+.spool-options button {
+    background-color: #f8fafc !important;
+    border: 2px solid #e2e8f0 !important;
+    color: #334155 !important;
+    padding: 8px 18px !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+    box-shadow: none !important;
+}
+
+/* تأثير عند المرور أو اختيار الزر (Active / Hover) */
+.product-options button:hover, 
+.product-options button.active,
+.spool-options button:hover,
+.spool-options button.active {
+    background-color: #eff6ff !important;
+    border-color: #2563eb !important;
+    color: #2563eb !important;
+}
+
+/* ==========================================
+   تنسيق زر "إضافة إلى السلة" الاحترافي
+   ========================================== */
+.add-to-cart-btn, 
+button[type="submit"], 
+.btn-cart {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    border: none !important;
+    width: 100% !important;
+    padding: 12px 20px !important;
+    border-radius: 10px !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    cursor: pointer !important;
+    transition: background-color 0.2s ease, transform 0.1s ease !important;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25) !important;
+}
+
+.add-to-cart-btn:hover, 
+button[type="submit"]:hover, 
+.btn-cart:hover {
+    background-color: #1d4ed8 !important;
+    transform: translateY(-1px) !important;
+}
+
+.add-to-cart-btn:active, 
+button[type="submit"]:active, 
+.btn-cart:active {
+    transform: translateY(0) !important;
+}
